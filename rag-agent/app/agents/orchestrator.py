@@ -157,6 +157,9 @@ class Orchestrator:
             final_answer_only = ""
 
         final_answer_only = normalize_answer(final_answer_only)
+        # SAFETY FIX 
+        if not final_answer_only:
+            final_answer_only = reasoner_output.strip()
 
         # -------------------------
         # 9. MEMORY

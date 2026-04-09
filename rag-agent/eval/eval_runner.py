@@ -85,10 +85,15 @@ def main():
             reasoning = result.get("reasoner_output", "")
 
             #  UPDATED: better scoring using reasoning + answer
-            score = final_score(answer, q["answer"])
-            rubric = llm_judge_full(
+            score = float(llm_judge_full(
                 reasoning + "\n\nFINAL ANSWER:\n" + answer,
                 q["answer"]
+            )["total"])
+            rubric = llm_judge_full(
+                reasoning 
+                + "\n\nFINAL ANSWER:\n" + answer
+                + "\n\nUSED_DOCS: " + str(result.get("retrieved_docs", [])),
+                q["answer"] + "\nEXPECTED_DOCS: " + str(q.get("sources", []))
             )
 
             print_debug(q, result, answer, score, rubric)

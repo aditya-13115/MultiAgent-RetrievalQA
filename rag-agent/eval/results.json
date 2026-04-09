@@ -13,7 +13,7 @@
       "citation": 2,
       "reasoning": 2,
       "completeness": 2,
-      "total": 9
+      "total": 9.0
     }
   },
   {
@@ -27,10 +27,10 @@
     "score": 10.0,
     "rubric": {
       "factual": 3,
-      "citation": 1,
+      "citation": 3,
       "reasoning": 2,
       "completeness": 2,
-      "total": 8
+      "total": 10.0
     }
   },
   {
@@ -41,30 +41,30 @@
     "used_docs": [
       "[Art. 07]"
     ],
-    "score": 10.0,
+    "score": 8.0,
     "rubric": {
       "factual": 3,
-      "citation": 2,
-      "reasoning": 2,
-      "completeness": 2,
-      "total": 9
+      "citation": 0,
+      "reasoning": 1,
+      "completeness": 0,
+      "total": 4.0
     }
   },
   {
     "id": "Q04",
     "question": "How many FDA-cleared AI/ML-enabled medical devices existed in the United States by mid-2024, and which clinical specialty accounts for the largest share of those approvals?",
-    "model_answer": "950 FDA‑cleared AI/ML‑enabled medical devices; Radiology.",
+    "model_answer": "950; Radiology",
     "expected_answer": "~950 total / Radiology 76%",
     "used_docs": [
       "[Art. 10]"
     ],
-    "score": 8.0,
+    "score": 9.0,
     "rubric": {
       "factual": 3,
-      "citation": 1,
-      "reasoning": 1,
+      "citation": 2,
+      "reasoning": 2,
       "completeness": 2,
-      "total": 7
+      "total": 9.0
     }
   },
   {
@@ -72,6 +72,25 @@
     "question": "What Phase II milestone did Insilico Medicine reach with its AI-designed drug ISM001-055 (Rentosertib), what disease does it target, and what company merger in the same period reshaped the AI drug discovery competitive landscape?",
     "model_answer": "Insufficient information.",
     "expected_answer": "Phase IIa · IPF · Recursion–Exscientia",
+    "used_docs": [
+      "[Art. 08]",
+      "[Art. 13]",
+      "[Art. 14]"
+    ],
+    "score": 1.0,
+    "rubric": {
+      "factual": 0,
+      "citation": 0,
+      "reasoning": 1,
+      "completeness": 0,
+      "total": 1.0
+    }
+  },
+  {
+    "id": "Q06",
+    "question": "A 2025 PLOS Digital Health paper identifies five critical ethical concerns in clinical AI integration. What are they, and which concern does the paper call out as most likely to worsen existing healthcare inequities?",
+    "model_answer": "",
+    "expected_answer": "Justice · Transparency · Consent · Accountability · Equity / Algorithmic bias",
     "used_docs": [],
     "score": 0.0,
     "rubric": {
@@ -79,24 +98,7 @@
       "citation": 0,
       "reasoning": 0,
       "completeness": 0,
-      "total": 0
-    }
-  },
-  {
-    "id": "Q06",
-    "question": "A 2025 PLOS Digital Health paper identifies five critical ethical concerns in clinical AI integration. What are they, and which concern does the paper call out as most likely to worsen existing healthcare inequities?",
-    "model_answer": "The five concerns are justice and fairness, transparency, patient consent and confidentiality, accountability, and patient‑centered and equitable care. The paper identifies justice and fairness as the concern most likely to worsen existing healthcare inequities.",
-    "expected_answer": "Justice · Transparency · Consent · Accountability · Equity / Algorithmic bias",
-    "used_docs": [
-      "[Art. 16]"
-    ],
-    "score": 10.0,
-    "rubric": {
-      "factual": 2,
-      "citation": 1,
-      "reasoning": 1,
-      "completeness": 2,
-      "total": 6
+      "total": 0.0
     }
   },
   {
@@ -107,13 +109,13 @@
     "used_docs": [
       "[Art. 19]"
     ],
-    "score": 10.0,
+    "score": 9.0,
     "rubric": {
       "factual": 3,
-      "citation": 1,
+      "citation": 3,
       "reasoning": 2,
       "completeness": 2,
-      "total": 8
+      "total": 10.0
     }
   },
   {
@@ -124,19 +126,19 @@
     "used_docs": [
       "[Art. 15]"
     ],
-    "score": 1.0,
+    "score": 6.0,
     "rubric": {
-      "factual": 0,
-      "citation": 0,
-      "reasoning": 1,
-      "completeness": 0,
-      "total": 1
+      "factual": 1,
+      "citation": 2,
+      "reasoning": 2,
+      "completeness": 2,
+      "total": 7.0
     }
   },
   {
     "id": "Q09",
     "question": "Imaging AI has high deployment rates across US health systems but only 19% of deployers report high success. Using what you know about FDA validation gaps and algorithmic bias literature, construct the most likely causal mechanism for this divergence.",
-    "model_answer": "The divergence is most likely caused by FDA approvals that omit detailed demographic validation and peer‑reviewed evidence, leading to AI models trained on non‑representative data. This creates algorithmic bias—significant performance gaps across racial and ethnic groups—so that, despite widespread deployment, only a minority of deployers achieve high success.",
+    "model_answer": "The high deployment of imaging AI contrasts with the low success rate because FDA approvals often lack demographic transparency and rigorous peer‑reviewed validation, leading to models trained on non‑representative data. This creates algorithmic bias—significant performance disparities across racial and ethnic groups—which undermines real‑world effectiveness and results in only 19% of deployers reporting high success.",
     "expected_answer": "Validation demographic gap → real-world performance drop",
     "used_docs": [
       "[Art. 04]",
@@ -145,10 +147,10 @@
     "score": 9.0,
     "rubric": {
       "factual": 3,
-      "citation": 2,
+      "citation": 3,
       "reasoning": 2,
       "completeness": 2,
-      "total": 9
+      "total": 10.0
     }
   },
   {
@@ -159,19 +161,19 @@
     "used_docs": [
       "[Art. 10]"
     ],
-    "score": 0.0,
+    "score": 1.0,
     "rubric": {
       "factual": 0,
       "citation": 0,
-      "reasoning": 0,
+      "reasoning": 1,
       "completeness": 0,
-      "total": 0
+      "total": 1.0
     }
   },
   {
     "id": "Q11",
     "question": "On March 18 2026, mental health care providers at Kaiser Permanente went on strike. How many workers participated, what specific triage headcount change at one facility triggered the action, and what UK AI company was KP confirmed to be evaluating?",
-    "model_answer": "2,400 workers; triage team cut from nine to three; Limbic.",
+    "model_answer": "2,400 workers; triage team cut from nine to three providers; Limbic.",
     "expected_answer": "2,400 / 9→3 / Limbic",
     "used_docs": [
       "[Art. 21]"
@@ -179,10 +181,10 @@
     "score": 10.0,
     "rubric": {
       "factual": 3,
-      "citation": 2,
+      "citation": 3,
       "reasoning": 2,
       "completeness": 2,
-      "total": 9
+      "total": 10.0
     }
   }
 ]
