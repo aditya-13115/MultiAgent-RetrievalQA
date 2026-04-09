@@ -27,9 +27,9 @@ def load_questions(path):
     return data
 
 
-# =========================
-# DEBUG PRINT
-# =========================
+# -------------------------
+# DEBUG PRINT (FIXED)
+# -------------------------
 def print_debug(q, result, answer, score, rubric):
     print("\n" + "=" * 60)
     print(f" {q['id']}")
@@ -41,14 +41,10 @@ def print_debug(q, result, answer, score, rubric):
     print("\n ROUTE:", result.get("route"))
     print("\n SUB-QUERIES:", result.get("sub_queries"))
 
-    print("\n RETRIEVED DOCS:")
-    docs = result.get("retrieved_docs", [])
-    
-    # FIX: handle both list of strings AND list of dicts
-    if docs and isinstance(docs[0], str):
-        print(docs)
-    else:
-        print([d.get("metadata", {}).get("doc_id", "N/A") for d in docs])
+    # ONLY USED DOCS (FIX)
+    print("\n USED CITATIONS:")
+    used_docs = result.get("retrieved_docs", [])
+    print(used_docs if used_docs else "None")
 
     print("\n MODEL ANSWER:")
     print(answer if answer else " EMPTY")
@@ -98,13 +94,14 @@ def main():
             print_debug(q, result, answer, score, rubric)
 
             results.append({
-                "id": q["id"],
-                "question": q["question"],
-                "model_answer": answer,
-                "expected_answer": q["answer"],
-                "score": score,
-                "rubric": rubric
-            })
+            "id": q["id"],
+            "question": q["question"],
+            "model_answer": answer,
+            "expected_answer": q["answer"],
+            "used_docs": result.get("retrieved_docs", []),
+            "score": score,
+            "rubric": rubric
+        })
 
         except Exception as e:
             print(f"ERROR in {q['id']}: {e}")

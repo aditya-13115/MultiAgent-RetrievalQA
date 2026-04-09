@@ -11,5 +11,5 @@ INDEX_DIR = os.path.join(DATA_DIR, "index")  # THIS IS THE MISSING VARIABLE
 os.makedirs(INDEX_DIR, exist_ok=True)
 
 # Chunking Configuration
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 900
+CHUNK_OVERLAP = 150

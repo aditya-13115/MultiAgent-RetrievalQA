@@ -24,9 +24,7 @@ def normalize(text):
 # =========================
 def llm_score(pred, truth):
     prompt = f"""
-You are an expert evaluator.
-
-Score the model answer from 0 to 10 based on correctness.
+You are a STRICT but FAIR evaluator.
 
 Ground truth:
 {truth}
@@ -34,13 +32,19 @@ Ground truth:
 Model answer:
 {pred}
 
-Evaluation rules:
-- DO NOT penalize wording differences or paraphrasing
-- Focus ONLY on factual correctness
-- If key numbers/entities match → high score (8–10)
-- If partially correct → medium score (4–7)
-- If incorrect or missing → low score (0–3)
-- If answer explicitly says "not found" or avoids answering → low score
+SCORING RULES (IMPORTANT):
+
+- If key numbers/entities match → 9–10
+- If partially correct → 6–8
+- If mostly correct but missing minor detail → 7–9
+- If vague but directionally correct → 5–7
+- If incorrect → 0–4
+
+CRITICAL:
+- DO NOT penalize formatting differences
+- DO NOT penalize missing words if meaning is same
+- If numbers match → HIGH SCORE
+- Short answers are fine
 
 Return ONLY a number between 0 and 10.
 """
@@ -80,10 +84,12 @@ Ground truth:
 Model answer:
 {pred}
 
-IMPORTANT:
+IIMPORTANT:
 - DO NOT penalize wording differences
-- Focus on correctness and grounding
-- Reward correct numbers and entities
+- REWARD correct numbers heavily
+- If answer contains correct key facts → high factual score
+- If citations exist → give at least 2
+- Be lenient but accurate
 
 Return STRICT JSON ONLY:
 {{

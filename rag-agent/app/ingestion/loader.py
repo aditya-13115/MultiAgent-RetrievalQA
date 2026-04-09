@@ -15,26 +15,30 @@ def extract_metadata_from_corpus_pdf(pdf_path):
         doc = fitz.open(pdf_path)
         full_text = ""
         for page in doc:
-            # FIX: Clean out the tags specifically to avoid ID confusion 
             text = re.sub(r'\\', '', page.get_text())
             full_text += text
         doc.close()
 
-        # Split the text by Article ID patterns (01 through 21) followed by thematic badges 
         pattern = r'(\d{2})\s+(?:MARKET|SURVEY|CLINICAL|RESEARCH|ETHICS|BREAKING)'
         parts = re.split(pattern, full_text)
 
-        # parts[0] is header info; then [id1, content1, id2, content2...]
         for i in range(1, len(parts), 2):
             art_id = parts[i]
             content = parts[i+1]
             
-            # Extract the first URL found in this block [cite: 253]
-            url_match = re.search(r'(https?://[^\s\n]+)', content)
+            url_match = re.search(r'https?://[^\s]+', content)
+
             if url_match:
-                url = url_match.group(1).strip().rstrip('.,')
+                url = url_match.group(0)
+
+                url = url.replace(" ", "")
+                url = url.replace("\n", "")
+                url = url.strip().rstrip('.,)')
+
+                # ✅ HARD FIX FOR ARTICLE 11
+                if art_id == "11":
+                    url = "https://www.sciencedirect.com/science/article/pii/S0031699725075118/pdfft?md5=581315c2472a6567c95c9b674e966e0c&pid=1-s2.0-S0031699725075118-main.pdf"
                 
-                # Title is typically the first non-empty line after the ID [cite: 253]
                 lines = [l.strip() for l in content.split('\n') if l.strip()]
                 title = lines[0] if lines else f"Article {art_id}"
                 
@@ -50,21 +54,41 @@ def extract_metadata_from_corpus_pdf(pdf_path):
     
     return metadata_list
 
+
 def extract_text_from_html(url):
     """Scrapes text from a live URL using BeautifulSoup."""
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+
+        # ✅ HANDLE PDF (for Article 11)
+        if url.endswith(".pdf") or "pdfft" in url:
+            response = requests.get(url, headers=headers, timeout=15)
+            response.raise_for_status()
+
+            with open("temp.pdf", "wb") as f:
+                f.write(response.content)
+
+            pdf = fitz.open("temp.pdf")
+            text = ""
+            for page in pdf:
+                text += page.get_text()
+            pdf.close()
+
+            return text.strip()
+
+        # Normal HTML
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Clean the HTML to extract only relevant text [cite: 259, 260]
         for script in soup(["script", "style", "nav", "footer"]):
             script.extract()
             
         return soup.get_text(separator=' ', strip=True)
+
     except Exception as e:
         return ""
+
 
 def load_documents(corpus_pdf_path):
     """

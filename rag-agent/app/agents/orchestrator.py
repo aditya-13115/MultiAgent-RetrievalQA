@@ -123,7 +123,8 @@ class Orchestrator:
         # -------------------------
         used_docs = extract_used_docs(reasoner_output)
 
-        # STRICT: ONLY USED DOCS
+        #
+        #  STRICT: ONLY USED DOCS
         final_docs = used_docs if used_docs else []
 
         # -------------------------
