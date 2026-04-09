@@ -18,7 +18,7 @@ class BaseRetriever:
         tokenized_corpus = [doc['text'].lower().split() for doc in self.metadata]
         self.bm25 = BM25Okapi(tokenized_corpus)
 
-    def dense_search(self, query, top_k=10):
+    def dense_search(self, query, top_k=12):
         """Semantic search using embeddings."""
         query_embedding = embed_texts([query])
         distances, indices = self.index.search(np.array(query_embedding), top_k)
@@ -29,7 +29,7 @@ class BaseRetriever:
                 results.append({"doc": self.metadata[idx], "score": float(distances[0][i])})
         return results
 
-    def sparse_search(self, query, top_k=5):
+    def sparse_search(self, query, top_k=12):
         """Keyword-based search using BM25."""
         tokenized_query = query.lower().split()
         doc_scores = self.bm25.get_scores(tokenized_query)

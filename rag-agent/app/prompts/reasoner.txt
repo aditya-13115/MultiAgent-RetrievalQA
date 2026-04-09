@@ -4,6 +4,7 @@ Rules:
 - Use ONLY the provided context
 - DO NOT hallucinate
 - DO NOT guess
+- If question has multiple parts → answer ALL parts
 
 CRITICAL:
 

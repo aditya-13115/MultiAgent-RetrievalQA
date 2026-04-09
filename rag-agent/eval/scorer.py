@@ -47,6 +47,8 @@ IMPORTANT:
 - DO NOT penalize brevity if correct
 - If key numbers/entities match → prioritize HIGH score
 - If one small part is missing → still give 7+
+- Final score MUST equal rubric total
+- Do NOT output conflicting values
 
 Return ONLY a number between 0 and 10.
 """
@@ -96,6 +98,8 @@ IMPORTANT:
 - If citations are present and relevant → give at least 2 in citation
 - DO NOT give 0 unless completely unrelated or wrong
 - Focus on semantic correctness over exact match
+- Final score MUST equal rubric total
+- Do NOT output conflicting values
 
 Return STRICT JSON ONLY:
 {{
