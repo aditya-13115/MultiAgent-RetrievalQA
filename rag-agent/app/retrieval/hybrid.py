@@ -2,7 +2,7 @@
 from app.retrieval.retriever import BaseRetriever
 from app.retrieval.reranker import rerank_documents
 
-def hybrid_search(query, retriever: BaseRetriever, top_k=5, alpha=0.6):
+def hybrid_search(query, retriever: BaseRetriever, top_k=7, alpha=0.6):
     """
     Combines dense and sparse retrieval, applies RRF, and reranks the output.
     """
@@ -21,7 +21,7 @@ def hybrid_search(query, retriever: BaseRetriever, top_k=5, alpha=0.6):
                 combined_docs[chunk_id] = {"doc": res["doc"], "rrf_score": 0.0}
             
             # RRF formula: 1 / (constant + rank)
-            combined_docs[chunk_id]["rrf_score"] += weight * (1.0 / (5 + rank))
+            combined_docs[chunk_id]["rrf_score"] += weight * (1.0 / (10 + rank))
             
     # Apply fusion weights (alpha controls balance between dense/sparse)
     add_to_fusion(dense_results, alpha)

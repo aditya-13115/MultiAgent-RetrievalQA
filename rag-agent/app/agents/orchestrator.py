@@ -104,7 +104,7 @@ class Orchestrator:
 
                     all_docs.append(doc)
 
-        final_context = all_docs[:7]
+        final_context = all_docs[:8]
 
         # -------------------------
         # 5. REASONER

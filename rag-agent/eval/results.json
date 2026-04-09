@@ -2,7 +2,7 @@
   {
     "id": "Q01",
     "question": "What percentage of healthcare organisations had implemented domain-specific AI tools as of 2025, and how does this compare to the broader enterprise market?",
-    "model_answer": "22% of healthcare organisations had implemented domain‑specific AI tools as of 2025, versus 9% in the broader enterprise market.",
+    "model_answer": "22% of healthcare organisations, compared to 9% in the broader enterprise market.",
     "expected_answer": "22% vs 9%",
     "used_docs": [
       "[Art. 01]"
@@ -11,9 +11,9 @@
     "rubric": {
       "factual": 3,
       "citation": 1,
-      "reasoning": 1,
+      "reasoning": 2,
       "completeness": 2,
-      "total": 7
+      "total": 8
     }
   },
   {
@@ -36,7 +36,7 @@
   {
     "id": "Q03",
     "question": "What share of clinical questions did the agentic system ChatRWD answer usefully, compared to standard large language models such as ChatGPT and Gemini?",
-    "model_answer": "ChatRWD answered 58% of clinical questions usefully, versus 2-10% for standard LLMs.",
+    "model_answer": "ChatRWD answered 58% of clinical questions usefully, whereas standard LLMs answered only 2%-10%.",
     "expected_answer": "58% (agentic) vs 2–10% (LLMs)",
     "used_docs": [
       "[Art. 07]"
@@ -44,16 +44,16 @@
     "score": 10.0,
     "rubric": {
       "factual": 3,
-      "citation": 1,
-      "reasoning": 1,
+      "citation": 2,
+      "reasoning": 2,
       "completeness": 2,
-      "total": 7
+      "total": 9
     }
   },
   {
     "id": "Q04",
     "question": "How many FDA-cleared AI/ML-enabled medical devices existed in the United States by mid-2024, and which clinical specialty accounts for the largest share of those approvals?",
-    "model_answer": "950; Radiology",
+    "model_answer": "950 devices; Radiology",
     "expected_answer": "~950 total / Radiology 76%",
     "used_docs": [
       "[Art. 10]"
@@ -62,21 +62,21 @@
     "rubric": {
       "factual": 2,
       "citation": 1,
-      "reasoning": 1,
+      "reasoning": 2,
       "completeness": 1,
-      "total": 5
+      "total": 6
     }
   },
   {
     "id": "Q05",
     "question": "What Phase II milestone did Insilico Medicine reach with its AI-designed drug ISM001-055 (Rentosertib), what disease does it target, and what company merger in the same period reshaped the AI drug discovery competitive landscape?",
-    "model_answer": "No relevant information found.",
+    "model_answer": "Insufficient information.",
     "expected_answer": "Phase IIa · IPF · Recursion–Exscientia",
     "used_docs": [
       "[Art. 13]",
       "[Art. 14]"
     ],
-    "score": 0.0,
+    "score": 1.0,
     "rubric": {
       "factual": 0,
       "citation": 0,
@@ -88,12 +88,27 @@
   {
     "id": "Q06",
     "question": "A 2025 PLOS Digital Health paper identifies five critical ethical concerns in clinical AI integration. What are they, and which concern does the paper call out as most likely to worsen existing healthcare inequities?",
-    "model_answer": "Justice and fairness, transparency, patient consent and confidentiality, accountability, and patient‑centered and equitable care; the paper flags justice and fairness as most likely to worsen existing healthcare inequities.",
+    "model_answer": "",
     "expected_answer": "Justice · Transparency · Consent · Accountability · Equity / Algorithmic bias",
+    "used_docs": [],
+    "score": 0.0,
+    "rubric": {
+      "factual": 0,
+      "citation": 0,
+      "reasoning": 0,
+      "completeness": 0,
+      "total": 0
+    }
+  },
+  {
+    "id": "Q07",
+    "question": "The Hastings Center identifies a specific behavioural tendency of large language models that makes them unsuitable as standalone therapists. What is it, and why does it pose a particular risk in mental health contexts?",
+    "model_answer": "Sycophancy; it can cause patients to form a bond that only affirms delusional or harmful beliefs, undermining the therapeutic alliance and potentially worsening mental health outcomes.",
+    "expected_answer": "Sycophancy",
     "used_docs": [
-      "[Art. 16]"
+      "[Art. 19]"
     ],
-    "score": 8.0,
+    "score": 10.0,
     "rubric": {
       "factual": 3,
       "citation": 1,
@@ -103,51 +118,35 @@
     }
   },
   {
-    "id": "Q07",
-    "question": "The Hastings Center identifies a specific behavioural tendency of large language models that makes them unsuitable as standalone therapists. What is it, and why does it pose a particular risk in mental health contexts?",
-    "model_answer": "Automation bias - it causes users to uncritically accept the model’s outputs, which in mental‑health settings can lead to misdiagnosis or inappropriate therapy and put patients at risk.",
-    "expected_answer": "Sycophancy",
-    "used_docs": [
-      "[Art. 16]"
-    ],
-    "score": 0.0,
-    "rubric": {
-      "factual": 0,
-      "citation": 0,
-      "reasoning": 1,
-      "completeness": 0,
-      "total": 1
-    }
-  },
-  {
     "id": "Q08",
     "question": "A 2024 cross-sectional study of FDA-cleared AI devices found a critical gap in demographic reporting. What specific data was missing from the vast majority of device submissions, and what percentage of devices reported it?",
-    "model_answer": "Race or ethnicity data; 15.5%.",
+    "model_answer": "Race or ethnicity data; 15.5%",
     "expected_answer": "Race/ethnicity / 3.6%",
     "used_docs": [
       "[Art. 15]"
     ],
-    "score": 1.0,
+    "score": 2.0,
     "rubric": {
       "factual": 0,
-      "citation": 0,
+      "citation": 1,
       "reasoning": 1,
       "completeness": 0,
-      "total": 1
+      "total": 2
     }
   },
   {
     "id": "Q09",
     "question": "Imaging AI has high deployment rates across US health systems but only 19% of deployers report high success. Using what you know about FDA validation gaps and algorithmic bias literature, construct the most likely causal mechanism for this divergence.",
-    "model_answer": "The high deployment but only 19% success is most likely caused by FDA approvals that rarely include race/ethnicity (3.6%) or socioeconomic data (<1%) and few peer‑reviewed validations (<2%), allowing AI models with high bias (83% risk, 82% performance gaps, 52.6% vs 39.6% sensitivity) to be deployed into diverse clinical settings where they under‑perform.",
+    "model_answer": "The divergence arises because FDA approvals are driven by streamlined, low‑barrier regulatory pathways that emphasize technical performance on limited, often non‑representative datasets, while post‑deployment monitoring is weak. This leads to widespread deployment of imaging AI that has not been validated on diverse, real‑world populations, exposing algorithmic bias and performance gaps that manifest as low clinical success rates among deployers.",
     "expected_answer": "Validation demographic gap → real-world performance drop",
     "used_docs": [
+      "[Art. 10]",
       "[Art. 15]"
     ],
-    "score": 8.0,
+    "score": 9.0,
     "rubric": {
-      "factual": 3,
-      "citation": 1,
+      "factual": 2,
+      "citation": 2,
       "reasoning": 2,
       "completeness": 2,
       "total": 8
@@ -156,13 +155,12 @@
   {
     "id": "Q10",
     "question": "Two frameworks for governing post-deployment AI in healthcare propose different monitoring mechanisms. One focuses on operationalised clinic-level audit steps; the other calls for adaptive regulatory oversight replacing static approval. What does the EU AI Act add that neither framework alone provides?",
-    "model_answer": "It adds stringent requirements for high‑risk AI systems—transparency, risk management, and compliance mechanisms.",
+    "model_answer": "A comprehensive legal framework that classifies medical AI as high‑risk and imposes strict requirements for transparency, risk management, and compliance on top of existing medical‑device rules.",
     "expected_answer": "Binding enforcement",
     "used_docs": [
-      "[Art. 10]",
-      "[Art. 18]"
+      "[Art. 10]"
     ],
-    "score": 2.0,
+    "score": 9.0,
     "rubric": {
       "factual": 0,
       "citation": 0,

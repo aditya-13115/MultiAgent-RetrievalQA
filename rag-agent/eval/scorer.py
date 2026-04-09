@@ -24,7 +24,7 @@ def normalize(text):
 # =========================
 def llm_score(pred, truth):
     prompt = f"""
-You are a STRICT but FAIR evaluator.
+You are a FAIR and CONSISTENT evaluator.
 
 Ground truth:
 {truth}
@@ -32,19 +32,21 @@ Ground truth:
 Model answer:
 {pred}
 
-SCORING RULES (IMPORTANT):
+SCORING GUIDELINES:
 
-- If key numbers/entities match → 9–10
-- If partially correct → 6–8
-- If mostly correct but missing minor detail → 7–9
-- If vague but directionally correct → 5–7
-- If incorrect → 0–4
+- Exact or near-exact meaning → 9–10
+- Correct key facts/numbers/entities → 8–10
+- Mostly correct but missing some detail → 7–9
+- Partially correct → 5–7
+- Slightly relevant but incomplete → 3–5
+- Incorrect → 0–3
 
-CRITICAL:
+IMPORTANT:
+- Focus on MEANING, not wording
 - DO NOT penalize formatting differences
-- DO NOT penalize missing words if meaning is same
-- If numbers match → HIGH SCORE
-- Short answers are fine
+- DO NOT penalize brevity if correct
+- If key numbers/entities match → prioritize HIGH score
+- If one small part is missing → still give 7+
 
 Return ONLY a number between 0 and 10.
 """
@@ -84,12 +86,16 @@ Ground truth:
 Model answer:
 {pred}
 
-IIMPORTANT:
-- DO NOT penalize wording differences
-- REWARD correct numbers heavily
-- If answer contains correct key facts → high factual score
-- If citations exist → give at least 2
-- Be lenient but accurate
+IMPORTANT:
+
+- Be LENIENT if the core meaning is correct
+- Reward correct numbers/entities strongly
+- DO NOT penalize wording or formatting differences
+- If answer is partially correct → do not go below 5 overall
+- If mostly correct → aim for 7–9 overall
+- If citations are present and relevant → give at least 2 in citation
+- DO NOT give 0 unless completely unrelated or wrong
+- Focus on semantic correctness over exact match
 
 Return STRICT JSON ONLY:
 {{
