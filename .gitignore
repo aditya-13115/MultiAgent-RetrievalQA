@@ -23,12 +23,6 @@ __pycache__/
 logs/
 *.log
 
-# =========================
-# FAISS / Vector DB files
-# =========================
-*.index
-*.pkl
-*.faiss
 
 # =========================
 # Build / Packaging
