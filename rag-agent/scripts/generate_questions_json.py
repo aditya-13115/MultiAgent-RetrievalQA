@@ -101,10 +101,10 @@ def save_json(response):
         with open("eval/questions.json", "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
-        print(f"✅ Saved {len(data)} questions to eval/questions.json")
+        print(f"Saved {len(data)} questions to eval/questions.json")
 
     except Exception as e:
-        print("❌ Failed to parse LLM output")
+        print("Failed to parse LLM output")
         print("\n--- CLEANED OUTPUT ---\n")
         print(response)
         print("\n--- ERROR ---\n", e)

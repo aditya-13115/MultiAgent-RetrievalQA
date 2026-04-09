@@ -17,13 +17,13 @@ from eval.scorer import final_score, llm_judge_full
 # =========================
 def load_questions(path):
     if not os.path.exists(path):
-        print(f"❌ File not found: {path}")
+        print(f"File not found: {path}")
         return []
 
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    print(f"✅ Loaded {len(data)} questions")
+    print(f"Loaded {len(data)} questions")
     return data
 
 
@@ -32,33 +32,33 @@ def load_questions(path):
 # =========================
 def print_debug(q, result, answer, score, rubric):
     print("\n" + "=" * 60)
-    print(f"📌 {q['id']}")
+    print(f" {q['id']}")
     print("=" * 60)
 
-    print("\n❓ QUESTION:")
+    print("\n QUESTION:")
     print(q["question"])
 
-    print("\n🔀 ROUTE:", result.get("route"))
-    print("\n🧩 SUB-QUERIES:", result.get("sub_queries"))
+    print("\n ROUTE:", result.get("route"))
+    print("\n SUB-QUERIES:", result.get("sub_queries"))
 
-    print("\n📚 RETRIEVED DOCS:")
+    print("\n RETRIEVED DOCS:")
     docs = result.get("retrieved_docs", [])
     
-    # 🔥 FIX: handle both list of strings AND list of dicts
+    # FIX: handle both list of strings AND list of dicts
     if docs and isinstance(docs[0], str):
         print(docs)
     else:
         print([d.get("metadata", {}).get("doc_id", "N/A") for d in docs])
 
-    print("\n🧠 MODEL ANSWER:")
-    print(answer if answer else "❌ EMPTY")
+    print("\n MODEL ANSWER:")
+    print(answer if answer else " EMPTY")
 
-    print("\n📊 EXPECTED ANSWER:")
+    print("\n EXPECTED ANSWER:")
     print(q["answer"])
 
-    print(f"\n⭐ SCORE: {score:.2f}/10")
+    print(f"\n SCORE: {score:.2f}/10")
 
-    print("\n🧪 RUBRIC:")
+    print("\n RUBRIC:")
     print(rubric)
 
     print("=" * 60 + "\n")
@@ -75,7 +75,7 @@ def main():
     retriever = BaseRetriever(INDEX_DIR)
 
     results = []
-    print("\n🚀 STARTING EVAL RUN\n")
+    print("\nSTARTING EVAL RUN\n")
 
     for q in questions:
         memory = ChatMemory()
@@ -85,10 +85,10 @@ def main():
             result = agent.process_query(q["question"])
             answer = result.get("answer", "")
 
-            # 🔥 ADD: pass reasoning also
+            #  ADD: pass reasoning also
             reasoning = result.get("reasoner_output", "")
 
-            # 🔥 UPDATED: better scoring using reasoning + answer
+            #  UPDATED: better scoring using reasoning + answer
             score = final_score(answer, q["answer"])
             rubric = llm_judge_full(
                 reasoning + "\n\nFINAL ANSWER:\n" + answer,
@@ -107,7 +107,7 @@ def main():
             })
 
         except Exception as e:
-            print(f"❌ ERROR in {q['id']}: {e}")
+            print(f"ERROR in {q['id']}: {e}")
 
     # =========================
     # SAVE RESULTS
@@ -124,7 +124,7 @@ def main():
     avg = sum(valid) / len(valid) if valid else 0
 
     print("\n" + "=" * 60)
-    print(f"🔥 FINAL AVG SCORE: {avg:.2f}/10")
+    print(f" FINAL AVG SCORE: {avg:.2f}/10")
     print("=" * 60)
 
 

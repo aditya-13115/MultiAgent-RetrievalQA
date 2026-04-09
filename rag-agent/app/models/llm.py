@@ -12,7 +12,7 @@ def call_llm(prompt):
     for _ in range(5):
         try:
             response = client.chat.completions.create(
-                model="qwen/qwen3-32b",
+                model="openai/gpt-oss-20b",
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0
             )

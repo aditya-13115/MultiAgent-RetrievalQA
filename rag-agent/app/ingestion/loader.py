@@ -85,7 +85,7 @@ def load_documents(corpus_pdf_path):
         text = extract_text_from_html(url)
         
         if text.strip():
-            print(f"✅ SUCCESS: Fetched Art. {art_num} | {item['title'][:50]}...")
+            print(f"SUCCESS: Fetched Art. {art_num} | {item['title'][:50]}...")
             success_count += 1
             docs.append({
                 "text": text,
@@ -96,7 +96,7 @@ def load_documents(corpus_pdf_path):
                 }
             })
         else:
-            print(f"❌ FAIL: Could not fetch Art. {art_num} from {url}")
+            print(f"FAIL: Could not fetch Art. {art_num} from {url}")
             fail_count += 1
 
     print(f"\n--- Fetching Complete: {success_count} Successes, {fail_count} Failures ---\n")

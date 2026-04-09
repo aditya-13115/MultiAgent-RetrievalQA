@@ -2,7 +2,7 @@
   {
     "id": "Q01",
     "question": "What percentage of healthcare organisations had implemented domain-specific AI tools as of 2025, and how does this compare to the broader enterprise market?",
-    "model_answer": "As of 2025, 22% of healthcare organizations had implemented domain-specific AI tools, significantly outpacing the broader enterprise market, where fewer than 10% (9%) of companies had adopted AI.",
+    "model_answer": "22% of healthcare organisations had implemented domain‑specific AI tools in 2025, compared with 9% of the broader enterprise market.",
     "expected_answer": "22% vs 9%",
     "score": 10.0,
     "rubric": {
@@ -16,22 +16,8 @@
   {
     "id": "Q02",
     "question": "In a Fall 2024 survey of 43 US non-profit health systems, which AI use case was the only one with 100% adoption activity, and what success rate did respondents report for it?",
-    "model_answer": "The AI use case with 100% adoption activity was Ambient Notes (a generative AI tool for clinical documentation), and respondents reported a 53% high success rate for it.",
+    "model_answer": "Ambient Notes - 53%",
     "expected_answer": "Ambient Notes / 53%",
-    "score": 9.0,
-    "rubric": {
-      "factual": 3,
-      "citation": 2,
-      "reasoning": 2,
-      "completeness": 2,
-      "total": 9
-    }
-  },
-  {
-    "id": "Q03",
-    "question": "What share of clinical questions did the agentic system ChatRWD answer usefully, compared to standard large language models such as ChatGPT and Gemini?",
-    "model_answer": "The agentic system ChatRWD answered **58% of clinical questions usefully**, compared to **2%-10%** for standard large language models like ChatGPT and Gemini [Art. 07].",
-    "expected_answer": "58% (agentic) vs 2–10% (LLMs)",
     "score": 10.0,
     "rubric": {
       "factual": 3,
@@ -42,37 +28,51 @@
     }
   },
   {
+    "id": "Q03",
+    "question": "What share of clinical questions did the agentic system ChatRWD answer usefully, compared to standard large language models such as ChatGPT and Gemini?",
+    "model_answer": "No data available.",
+    "expected_answer": "58% (agentic) vs 2–10% (LLMs)",
+    "score": 0.0,
+    "rubric": {
+      "factual": 0,
+      "citation": 0,
+      "reasoning": 0,
+      "completeness": 0,
+      "total": 0
+    }
+  },
+  {
     "id": "Q04",
     "question": "How many FDA-cleared AI/ML-enabled medical devices existed in the United States by mid-2024, and which clinical specialty accounts for the largest share of those approvals?",
-    "model_answer": "By mid-2024, there were **950 FDA-cleared AI/ML-enabled medical devices** in the United States. **Radiology** accounted for the largest share of these approvals.",
+    "model_answer": "950 FDA‑cleared AI/ML‑enabled medical devices; Radiology accounts for the largest share.",
     "expected_answer": "~950 total / Radiology 76%",
-    "score": 9.0,
+    "score": 6.0,
     "rubric": {
-      "factual": 3,
-      "citation": 1,
+      "factual": 2,
+      "citation": 2,
       "reasoning": 1,
-      "completeness": 2,
-      "total": 7
+      "completeness": 1,
+      "total": 6
     }
   },
   {
     "id": "Q05",
     "question": "What Phase II milestone did Insilico Medicine reach with its AI-designed drug ISM001-055 (Rentosertib), what disease does it target, and what company merger in the same period reshaped the AI drug discovery competitive landscape?",
-    "model_answer": "<think>\nOkay, let's tackle this query step by step. The user is asking three things: the Phase II milestone reached by Insilico Medicine with ISM001-055 (Rentosertib), the disease it targets, and a company merger that reshaped the AI drug discovery landscape during the same period.\n\nFirst, I need to look through the provided context to find information on Insilico Medicine's Phase II milestone. Let me check each article. \n\nLooking at [Art. 13], it mentions that Insilico Medicine developed AI-based platforms for drug candidates, including treatments for fibrosis. It specifically states that their AI platform designed a novel drug candidate for idiopathic pulmonary fibrosis in 18 months. However, it doesn't mention Phase II milestones. \n\n[Art. 14] talks about GlaxoSmithKline partnering with In Silico Medicine in 2017 and their financials up to 2024, but no Phase II details. \n\n[Art. 20] lists partnerships involving Insilico Medicine with GSK, but again, no mention of Phase II milestones. \n\nHmm, none of the articles explicitly state the Phase II milestone for ISM001-055. Wait, maybe I missed something. Let me check again. The user mentioned \"Rentosertib\" as the drug name. The context in [Art. 13] refers to idiopathic pulmonary fibrosis, which is a disease. If ISM001-055 is targeting that, maybe the Phase II milestone is related to that. But the article doesn't specify Phase II. \n\nSince the context doesn't provide the Phase II milestone details, perhaps the answer is that it's not mentioned. But the user's query requires all parts to be answered. Wait, the third part is about a company merger that reshaped the landscape. Let me check for mergers. \n\nLooking at [Art. 02], it mentions partnerships with Exscientia and BenevolentAI, but not mergers. [Art. 20] lists partnerships like Bayer with Exscientia, Merck with several companies, GSK with Insilico, etc. But mergers? Maybe a merger between two companies. \n\nWait, [Art. 14] mentions GlaxoSmithKline partnered with In Silico Medicine in 2017. Is that a merger? No, it's a partnership. The user is asking for a merger. Let me check again. \n\nLooking at [Art. 02], there's no mention of mergers. [Art. 13] talks about partnerships. [Art. 20] lists partnerships but not mergers. Hmm. Maybe the answer for the merger part is not present. But the user wants all parts answered. \n\nWait, perhaps the merger is between In Silico Medicine and another company? The context doesn't mention any merger involving Insilico Medicine. The only partnership is with GSK in 2017. \n\nSince the context doesn't provide the Phase II milestone or the merger, but the user requires all parts, maybe the answer is that the Phase II milestone isn't mentioned, and the merger isn't mentioned. But the user's instructions say to avoid saying \"not found\" if partial info exists. However, in this case, there's no info. \n\nWait, maybe the Phase II milestone is in another article. Let me check again. [Art. 13] says \"Strikingly, this AI platform designed a novel drug candidate for idiopathic pulmonary fibrosis in just 18 months.\" If ISM001-055 is that drug, then maybe the Phase II milestone is completing the 18-month development. But the article doesn't specify Phase II. \n\nAlternatively, maybe the Phase II milestone is related to clinical trials. The context doesn't mention clinical trial phases for ISM001-055. So perhaps the answer is that the Phase II milestone isn't mentioned. \n\nFor the merger part, maybe the merger between two companies in the AI drug discovery space. For example, if two companies merged, but the context doesn't mention any mergers. The closest is partnerships, like GSK with Insilico, but that's a partnership, not a merger. \n\nGiven the strict rules, I need to answer based on the context. Since the context doesn't provide the Phase II milestone or the merger, but the user wants all parts answered, perhaps the answer is that the Phase II milestone isn't mentioned, and the merger isn't mentioned. However, the user's instructions say to avoid \"not found\" if partial info exists. But in this case, there's no info. \n\nWait, maybe the answer is that the Phase II milestone is the 18-month development for idiopathic pulmonary fibrosis, and the merger is the GSK partnership. But the partnership isn't a merger. \n\nThis is tricky. According to the rules, if the answer components are spread across documents, combine them. But in this case, the required info isn't present. So perhaps the answer is that the Phase II milestone isn't mentioned, and the merger isn't mentioned. But the user wants all parts answered. \n\nAlternatively, maybe the answer is that the Phase II milestone is the 18-month development for idiopathic pulmonary fibrosis (as per [Art. 13]), and the merger is the GSK partnership (as per [Art. 14]). But the partnership isn't a merger. \n\nGiven the strict rules, I have to state what's in the context. So the answer would be:\n\nPhase II milestone: Not mentioned in the provided context.\n\nDisease: Idiopathic pulmonary fibrosis (from [Art. 13]).\n\nMerger: Not mentioned in the provided context.\n\nBut the user wants all parts answered. However, according to the rules, if the answer components are spread across documents, combine them. But in this case, the required info isn't present. So perhaps the answer is that the Phase II milestone isn't mentioned, the disease is idiopathic pulmonary fibrosis, and the merger isn't mentioned. But the user's instructions say to avoid \"not found\" if partial info exists. However, in this case, there's no info on the Phase II milestone or the merger. \n\nWait, maybe the merger is the partnership between GSK and Insilico Medicine in 2017 (Art. 14). But that's a partnership, not a merger. The user is asking for a merger. So that's not applicable. \n\nTherefore, the answer would be:\n\nPhase II milestone: Not mentioned.\n\nDisease: Idiopathic pulmonary fibrosis [Art. 13].\n\nMerger: Not mentioned.\n\nBut the user wants all parts answered. However, according to the rules, if the answer components are spread across documents, combine them. But in this case, the required info isn't present. So the answer is incomplete. \n\nAlternatively, maybe the Phase II milestone is the 18-month development period mentioned in [Art. 13], which could be considered a Phase II milestone. If that's the case, then the answer would be:\n\nPhase II milestone: Designed a novel drug candidate for idiopathic pulmonary fibrosis in 18 months [Art. 13].\n\nDisease: Idiopathic pulmonary fibrosis [Art. 13].\n\nMerger: Not mentioned.\n\nBut the user is asking for a Phase II milestone, which typically refers to clinical trial phases. The 18-month development is part of the drug design phase, not clinical trials. So that might not be the correct interpretation. \n\nGiven the ambiguity, the best approach is to state what's in the context. Since the context doesn't mention the Phase II milestone or the merger, but does mention the disease, the answer would be:\n\nPhase II milestone: Not mentioned.\n\nDisease: Idiopathic pulmonary fibrosis [Art. 13].\n\nMerger: Not mentioned.\n\nBut the user's instructions say to avoid \"not found\" if partial info exists. However, in this case, there's no info. Therefore, the answer is incomplete. \n\nAlternatively, perhaps the merger is the partnership between GSK and Insilico Medicine in 2017 (Art. 14), even though it's a partnership, not a merger. But the user is asking for a merger. So that's not accurate. \n\nGiven the strict rules, the answer must be based solely on the context. Therefore, the answer is:\n\nPhase II milestone: Not mentioned in the provided context.\n\nDisease: Idiopathic pulmonary fibrosis [Art. 13].\n\nMerger: Not mentioned in the provided context.\n\nBut the user wants all parts answered. However, according to the rules, if the answer components are spread across documents, combine them. But in this case, the required info isn't present. So the answer is incomplete. \n\nWait, maybe the merger is the partnership between GSK and Insilico Medicine in 2017 (Art. 14). Even though it's a partnership, perhaps the user considers it a merger. But that's a stretch. \n\nGiven the strict rules, the answer must be based on the context. Therefore, the answer is:\n\nPhase II milestone: Not mentioned.\n\nDisease: Idiopathic pulmonary fibrosis [Art. 13].\n\nMerger: Not mentioned.\n\nBut the user wants all parts answered. However, according to the rules, if the answer components are spread across documents, combine them. But in this case, the required info isn't present. So the answer is incomplete. \n\nTherefore, the final answer is:\n\nPhase II milestone: Not mentioned in the provided context.\n\nDisease: Idiopathic pulmonary fibrosis [Art. 13].\n\nMerger: Not mentioned",
+    "model_answer": "Insufficient information.",
     "expected_answer": "Phase IIa · IPF · Recursion–Exscientia",
-    "score": 3.0,
+    "score": 0.0,
     "rubric": {
-      "factual": 1,
+      "factual": 0,
       "citation": 0,
       "reasoning": 0,
       "completeness": 0,
-      "total": 1
+      "total": 0
     }
   },
   {
     "id": "Q06",
     "question": "A 2025 PLOS Digital Health paper identifies five critical ethical concerns in clinical AI integration. What are they, and which concern does the paper call out as most likely to worsen existing healthcare inequities?",
-    "model_answer": "The 2025 PLOS Digital Health paper identifies five critical ethical concerns in clinical AI integration: justice and fairness, transparency, patient consent and confidentiality, accountability, and patient-centered and equitable care. The paper highlights **justice and fairness** as the concern most likely to worsen existing healthcare inequities due to biases arising from non-representative datasets and opaque model development processes.",
+    "model_answer": "The five concerns are justice and fairness, transparency, patient consent and confidentiality, accountability, and patient‑centered and equitable care. The paper identifies algorithmic bias as the concern most likely to worsen existing healthcare inequities.",
     "expected_answer": "Justice · Transparency · Consent · Accountability · Equity / Algorithmic bias",
     "score": 10.0,
     "rubric": {
@@ -86,21 +86,21 @@
   {
     "id": "Q07",
     "question": "The Hastings Center identifies a specific behavioural tendency of large language models that makes them unsuitable as standalone therapists. What is it, and why does it pose a particular risk in mental health contexts?",
-    "model_answer": "The Hastings Center identifies the behavioral tendency of **sycophancy** in large language models, where they unconditionally affirm patients’ perspectives to maintain engagement. This poses risks in mental health contexts because it may lead patients to form deceptive bonds with chatbots (anthropomorphizing) or reinforce delusional thinking, undermining therapeutic integrity and patient safety.",
+    "model_answer": "Sycophancy; it can reinforce patients’ delusional thinking and create deceptive, anthropomorphized relationships that pose a risk in mental health contexts.",
     "expected_answer": "Sycophancy",
     "score": 10.0,
     "rubric": {
       "factual": 3,
-      "citation": 2,
-      "reasoning": 2,
+      "citation": 0,
+      "reasoning": 0,
       "completeness": 2,
-      "total": 9
+      "total": 5
     }
   },
   {
     "id": "Q08",
     "question": "A 2024 cross-sectional study of FDA-cleared AI devices found a critical gap in demographic reporting. What specific data was missing from the vast majority of device submissions, and what percentage of devices reported it?",
-    "model_answer": "The specific missing data was **demographic breakdowns**, which were absent in **95.5% of FDA-cleared AI device submissions**. Only **4.5% of devices** reported this information.",
+    "model_answer": "Race or ethnicity data; 15.5% of devices reported it.",
     "expected_answer": "Race/ethnicity / 3.6%",
     "score": 0.0,
     "rubric": {
@@ -114,43 +114,43 @@
   {
     "id": "Q09",
     "question": "Imaging AI has high deployment rates across US health systems but only 19% of deployers report high success. Using what you know about FDA validation gaps and algorithmic bias literature, construct the most likely causal mechanism for this divergence.",
-    "model_answer": "The divergence arises from three interlocking factors: (1) FDA validation gaps that prioritize static, single-site testing over real-world adaptability [Art. 18], (2) algorithmic biases from non-representative training data causing performance disparities across demographics [Art. 15], and (3) insufficient post-deployment monitoring to address evolving model behavior or equity issues [Art. 04]. Together, these create a scenario where AI tools are widely deployed but fail to deliver consistent, equitable outcomes.",
+    "model_answer": "Regulatory leniency (rapid 510(k) clearance and weak post‑market surveillance) lets many imaging AI devices enter practice, yet the pervasive algorithmic bias (≈83% high‑risk models, 82% performance gaps, sensitivity 52.6% vs 39.6%) undermines real‑world effectiveness—explaining why only 19% of deployers report high success.",
     "expected_answer": "Validation demographic gap → real-world performance drop",
-    "score": 9.0,
+    "score": 1.0,
     "rubric": {
-      "factual": 1,
-      "citation": 0,
+      "factual": 3,
+      "citation": 2,
       "reasoning": 2,
       "completeness": 2,
-      "total": 5
+      "total": 9
     }
   },
   {
     "id": "Q10",
     "question": "Two frameworks for governing post-deployment AI in healthcare propose different monitoring mechanisms. One focuses on operationalised clinic-level audit steps; the other calls for adaptive regulatory oversight replacing static approval. What does the EU AI Act add that neither framework alone provides?",
-    "model_answer": "The EU AI Act introduces a binding legal framework for high-risk AI systems in healthcare, enforcing transparency, risk management, and cross-border compliance. This harmonizes standards across EU member states, addressing regulatory fragmentation that neither clinic-level audits nor adaptive oversight frameworks alone resolve.",
+    "model_answer": "The EU AI Act adds new obligations for high‑risk AI systems—quality management, transparency, human oversight, etc.—that neither framework alone provides.",
     "expected_answer": "Binding enforcement",
-    "score": 9.0,
+    "score": 0.0,
     "rubric": {
-      "factual": 2,
+      "factual": 0,
       "citation": 0,
-      "reasoning": 1,
-      "completeness": 2,
-      "total": 5
+      "reasoning": 0,
+      "completeness": 0,
+      "total": 0
     }
   },
   {
     "id": "Q11",
     "question": "On March 18 2026, mental health care providers at Kaiser Permanente went on strike. How many workers participated, what specific triage headcount change at one facility triggered the action, and what UK AI company was KP confirmed to be evaluating?",
-    "model_answer": "<think>\nOkay, let's tackle this query step by step. The user is asking three specific things: the number of workers who participated in the strike on March 18, 2026, the specific triage headcount change that triggered the action, and the UK AI company Kaiser Permanente (KP) was evaluating.\n\nFirst, looking at the retrieved context. The first article, Art. 21, mentions a strike by 2,400 mental health care providers in Northern California and the Central Valley. The date mentioned here is \"last month\" relative to when the article was written. Since the user's query is about March 18, 2026, if the article was written in April 2026, then \"last month\" would refer to March. So the 2,400 workers participated in the strike. That answers the first part.\n\nNext, the triage headcount change. In Art. 21, there's mention of a change in triage system at KP. Specifically, since 2019, there were triage clinicians, but in May 2025, a therapist was reassigned. The key point here is that the triage was being done by unlicensed lay operators following a script or e-visits instead of licensed clinicians. However, the exact headcount change isn't directly stated. The user is asking for a specific number, like how many positions were cut or changed. The article doesn't provide an exact number, but it does mention that the triage system was revamped, leading to lower-paid workers handling triage. Since the user wants the specific change that triggered the strike, maybe the reassignment of licensed clinicians to other duties and replacing their roles with unlicensed staff is the trigger. But the exact number isn't given. Wait, the user might be referring to the number of workers reassigned. The example given is one therapist, Ilana Marcucci-Morris, but that's just one person. However, the strike was about the overall change in triage roles. Maybe the headcount change is the shift from licensed to unlicensed, but without a specific number, perhaps the answer is that the triage was moved from licensed clinicians to unlicensed operators, but the exact headcount isn't provided. Hmm, but the user is asking for a specific number. Since the context doesn't mention a specific number for the headcount change, maybe I need to check if there's another part. Wait, the strike was triggered by the revamp of the triage system, which involved reassigning licensed clinicians and using lower-paid workers. The exact headcount change might not be a number but the nature of the change. However, the user is asking for a specific number. Since the context doesn't provide that, maybe the answer is that the specific triage headcount change was the replacement of licensed clinicians with unlicensed lay operators, but no exact number is given. But the user wants a specific number. Wait, maybe the 2,400 workers are the ones who went on strike, but that's the total number of participants. The trigger was the change in triage roles. The article says that in May 2025, KP started using unlicensed operators for triage. The exact headcount change might not be specified, so perhaps the answer is that the triage system was changed to use unlicensed staff, but the exact number isn't provided. However, the user is asking for a specific triage headcount change. Since the context doesn't mention a specific number, maybe the answer is that the change involved replacing licensed clinicians with unlicensed ones, but the exact number isn't stated. But the user might be expecting a number. Wait, maybe the 2,400 is the number of workers affected? No, the 2,400 is the number of strikers. The trigger was the change in triage roles. The article doesn't give a specific number for the headcount change, so perhaps the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed lay operators, but the exact number isn't provided. However, the user is asking for a specific number. Since the context doesn't have that, maybe the answer is that the specific triage headcount change isn't mentioned. But the user wants the answer using the provided context. Wait, maybe the answer is that the triage headcount change was the reassignment of licensed clinicians to other duties and the use of unlicensed operators, but the exact number isn't given. However, the user is asking for a specific number. Since the context doesn't provide that, perhaps the answer is that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe I need to check again. The article says that the triage used to be done by licensed clinicians (10-15 minutes) and now is done by unlicensed operators or e-visits. The exact headcount change isn't given, but the trigger was the revamping of the triage system. So the answer for the triage headcount change is that KP replaced licensed clinicians with unlicensed lay operators for triage, but the exact number isn't specified. However, the user is asking for a specific number. Since the context doesn't have that, maybe the answer is that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Wait, maybe the answer is that the triage headcount change was the reassignment of licensed clinicians to other duties, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the use of unlicensed lay operators instead of licensed clinicians, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the reassignment of licensed clinicians to other duties, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the use of unlicensed lay operators instead of licensed clinicians, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the reassignment of licensed clinicians to other duties, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the use of unlicensed lay operators instead of licensed clinicians, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the reassignment of licensed clinicians to other duties, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would be that the specific triage headcount change isn't mentioned. But the user is asking for it. Wait, maybe the answer is that the triage headcount change was the use of unlicensed lay operators instead of licensed clinicians, but the exact number isn't provided. So the answer would be that the specific triage headcount change isn't mentioned. But the user wants the answer using the context. Hmm. Maybe the answer is that the triage headcount change was the replacement of licensed clinicians with unlicensed ones, but the exact number isn't given. So the answer would",
+    "model_answer": "2,400 workers; triage team cut from nine to three; Limbic.",
     "expected_answer": "2,400 / 9→3 / Limbic",
-    "score": 1.0,
+    "score": 10.0,
     "rubric": {
-      "factual": 1,
-      "citation": 0,
-      "reasoning": 0,
-      "completeness": 0,
-      "total": 1
+      "factual": 3,
+      "citation": 2,
+      "reasoning": 2,
+      "completeness": 2,
+      "total": 9
     }
   }
 ]

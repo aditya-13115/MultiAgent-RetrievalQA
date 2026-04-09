@@ -8,11 +8,11 @@ def route_query(query: str, history: str) -> str:
 
     response = call_llm(prompt).strip().lower()
 
-    # 🔥 CLEAN response (remove punctuation, spaces)
+    # CLEAN response (remove punctuation, spaces)
     response = re.sub(r'[^a-z_]', ' ', response)
     tokens = response.split()
 
-    # 🔥 STRICT MATCHING
+    # STRICT MATCHING
     if "out_of_scope" in tokens:
         return "out_of_scope"
     elif "follow_up" in tokens:
@@ -20,5 +20,5 @@ def route_query(query: str, history: str) -> str:
     elif "factual" in tokens:
         return "factual"
 
-    # 🔥 fallback safety
+    # fallback safety
     return "factual"

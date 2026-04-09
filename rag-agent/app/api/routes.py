@@ -1,7 +1,7 @@
 import sys
 import os
 
-# 🔥 FORCE PROJECT ROOT INTO PATH (PERMANENT FIX)
+# FORCE PROJECT ROOT INTO PATH (PERMANENT FIX)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
@@ -34,7 +34,7 @@ def home():
 def query_api(req: QueryRequest):
     result = agent.process_query(req.query)
 
-    # 🔥 STRUCTURED RESPONSE
+    # STRUCTURED RESPONSE
     return {
         "answer": result.get("answer"),
         "trace": {

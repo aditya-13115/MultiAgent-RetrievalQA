@@ -7,6 +7,54 @@ from app.retrieval.hybrid import hybrid_search
 import re
 
 
+# -------------------------
+# CLEAN DOC ID
+# -------------------------
+def clean_doc_id(doc_id: str) -> str:
+    if not doc_id:
+        return "Art. 00"
+
+    doc_id = doc_id.replace("\u202f", " ").replace("\xa0", " ")
+
+    match = re.search(r'(\d+)', doc_id)
+    if match:
+        num = int(match.group(1))
+        return f"Art. {str(num).zfill(2)}"
+
+    return "Art. 00"
+
+
+# -------------------------
+# NORMALIZE ANSWER
+# -------------------------
+def normalize_answer(ans: str) -> str:
+    if not ans:
+        return ""
+
+    ans = ans.replace("\u202f", " ")
+    ans = ans.replace("–", "-")
+
+    ans = re.sub(r'(\d)\s*%', r'\1%', ans)
+    ans = re.sub(r'\s+', ' ', ans)
+
+    return ans.strip()
+
+
+# -------------------------
+# EXTRACT USED DOCS
+# -------------------------
+def extract_used_docs(text: str):
+    text = text.replace("\u202f", " ").replace("\xa0", " ")
+
+    matches = re.findall(r'Art\.\s*(\d{1,2})', text)
+
+    cleaned = []
+    for m in matches:
+        cleaned.append(f"[Art. {str(int(m)).zfill(2)}]")
+
+    return sorted(list(set(cleaned)))
+
+
 class Orchestrator:
     def __init__(self, retriever, memory):
         self.retriever = retriever
@@ -16,64 +64,26 @@ class Orchestrator:
         history_str = self.memory.get_history_string()
 
         # -------------------------
-        # 1. ROUTER (FIRST STEP)
+        # 1. ROUTER
         # -------------------------
         route = route_query(user_query, history_str)
         if len(self.memory.history) == 0 and route == "follow_up":
             route = "factual"
 
         # -------------------------
-        # ROUTER SAFETY
-        # -------------------------
-        healthcare_keywords = [
-            "clinical", "health", "medical", "fda", "device",
-            "trial", "patient", "radiology", "ai", "ethics",
-            "regulation", "hospital", "care", "mental"
-        ]
-
-        if route == "out_of_scope":
-            if any(k in user_query.lower() for k in healthcare_keywords):
-                route = "factual"
-
-        # -------------------------
-        # 2. OUT-OF-SCOPE HANDLING
-        # -------------------------
-        if route == "out_of_scope":
-            ans = (
-                "This query is outside the Healthcare AI domain. "
-                "I can only answer questions related to AI in healthcare, "
-                "drug discovery, and regulations."
-            )
-
-            self.memory.add_interaction(user_query, ans)
-
-            return {
-                "route": route,
-                "rewritten_query": None,
-                "sub_queries": [],
-                "retrieved_docs": [],
-                "reasoner_output": "Skipped (out_of_scope)",
-                "critic_output": None,
-                "answer": ans
-            }
-
-        # -------------------------
-        # 3. FOLLOW-UP REWRITING
+        # 2. REWRITE (if needed)
         # -------------------------
         current_query = user_query
-
         if route == "follow_up":
             current_query = rewrite_query(user_query, history_str)
-            print(f"Rewritten Query: {current_query}")
 
         # -------------------------
-        # 4. QUERY DECOMPOSITION
+        # 3. DECOMPOSE
         # -------------------------
         sub_queries = decompose_query(current_query)
-        print(f"Sub-queries: {sub_queries}")
 
         # -------------------------
-        # 5. HYBRID RETRIEVAL
+        # 4. RETRIEVAL
         # -------------------------
         all_docs = []
         seen_chunks = set()
@@ -82,20 +92,25 @@ class Orchestrator:
             docs = hybrid_search(sq, self.retriever, top_k=5, alpha=0.5)
 
             for doc in docs:
-                doc_id = doc.get("metadata", {}).get("doc_id")
+                cid = doc.get("metadata", {}).get("chunk_id")
 
-                if doc_id and doc_id not in seen_chunks:
-                    seen_chunks.add(doc_id)
+                if cid and cid not in seen_chunks:
+                    seen_chunks.add(cid)
+
+                    # CLEAN DOC ID HERE
+                    doc["metadata"]["doc_id"] = clean_doc_id(
+                        doc["metadata"].get("doc_id", "")
+                    )
+
                     all_docs.append(doc)
 
         final_context = all_docs[:7]
 
         # -------------------------
-        # 6. REASONER
+        # 5. REASONER
         # -------------------------
         reasoner_output = generate_answer(current_query, final_context)
 
-        # 🔥 REMOVE <think> (CRITICAL FIX)
         reasoner_output = re.sub(
             r"<think>.*?</think>",
             "",
@@ -104,31 +119,24 @@ class Orchestrator:
         ).strip()
 
         # -------------------------
-        # 7. EXTRACT USED DOCS
+        # 6. EXTRACT USED DOCS
         # -------------------------
-        def extract_used_docs(text):
-            matches = re.findall(r'Art\.\s*\d+', text)
-            cleaned = [f"[{m.strip()}]" for m in matches]
-            return list(set(cleaned))
-
         used_docs = extract_used_docs(reasoner_output)
 
-        # 🔥 FIX: proper fallback (OUTSIDE return)
-        if used_docs:
-            final_docs = used_docs
-        else:
-            final_docs = [
-                f"[{d.get('metadata', {}).get('doc_id', 'N/A')}]"
-                for d in final_context
-            ]
+        # STRICT: ONLY USED DOCS
+        final_docs = used_docs if used_docs else []
 
         # -------------------------
-        # 8. CRITIC
+        # 7. CRITIC
         # -------------------------
-        critic_output = evaluate_answer(current_query, reasoner_output, final_context)
+        critic_output = evaluate_answer(
+            current_query,
+            reasoner_output,
+            final_context
+        )
 
         # -------------------------
-        # 9. FINAL ANSWER EXTRACTION
+        # 8. FINAL ANSWER
         # -------------------------
         try:
             if "FINAL ANSWER:" in reasoner_output:
@@ -141,24 +149,21 @@ class Orchestrator:
             else:
                 final_answer_only = reasoner_output.strip()
 
-        except Exception:
-            final_answer_only = (
-                "I could not generate a valid answer based on the provided corpus."
-            )
+        except:
+            final_answer_only = ""
+
+        final_answer_only = normalize_answer(final_answer_only)
 
         # -------------------------
-        # 10. MEMORY UPDATE
+        # 9. MEMORY
         # -------------------------
         self.memory.add_interaction(user_query, final_answer_only)
 
-        # -------------------------
-        # 11. FINAL RESPONSE
-        # -------------------------
         return {
             "route": route,
             "rewritten_query": current_query,
             "sub_queries": sub_queries,
-            "retrieved_docs": final_docs,   # ✅ FIXED
+            "retrieved_docs": final_docs,
             "reasoner_output": reasoner_output,
             "critic_output": critic_output,
             "answer": final_answer_only
