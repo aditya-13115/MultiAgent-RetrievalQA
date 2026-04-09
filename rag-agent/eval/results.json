@@ -30,7 +30,7 @@
   {
     "id": "Q03",
     "question": "What share of clinical questions did the agentic system ChatRWD answer usefully, compared to standard large language models such as ChatGPT and Gemini?",
-    "model_answer": "No data available.",
+    "model_answer": "No data reported.",
     "expected_answer": "58% (agentic) vs 2–10% (LLMs)",
     "score": 0.0,
     "rubric": {
@@ -46,13 +46,13 @@
     "question": "How many FDA-cleared AI/ML-enabled medical devices existed in the United States by mid-2024, and which clinical specialty accounts for the largest share of those approvals?",
     "model_answer": "950 FDA‑cleared AI/ML‑enabled medical devices; Radiology accounts for the largest share.",
     "expected_answer": "~950 total / Radiology 76%",
-    "score": 6.0,
+    "score": 7.0,
     "rubric": {
       "factual": 2,
-      "citation": 2,
+      "citation": 1,
       "reasoning": 1,
       "completeness": 1,
-      "total": 6
+      "total": 5
     }
   },
   {
@@ -100,35 +100,35 @@
   {
     "id": "Q08",
     "question": "A 2024 cross-sectional study of FDA-cleared AI devices found a critical gap in demographic reporting. What specific data was missing from the vast majority of device submissions, and what percentage of devices reported it?",
-    "model_answer": "Race or ethnicity data; 15.5% of devices reported it.",
+    "model_answer": "Race or ethnicity data; 15.5% reported it.",
     "expected_answer": "Race/ethnicity / 3.6%",
     "score": 0.0,
     "rubric": {
       "factual": 0,
       "citation": 0,
-      "reasoning": 1,
+      "reasoning": 0,
       "completeness": 0,
-      "total": 1
+      "total": 0
     }
   },
   {
     "id": "Q09",
     "question": "Imaging AI has high deployment rates across US health systems but only 19% of deployers report high success. Using what you know about FDA validation gaps and algorithmic bias literature, construct the most likely causal mechanism for this divergence.",
-    "model_answer": "Regulatory leniency (rapid 510(k) clearance and weak post‑market surveillance) lets many imaging AI devices enter practice, yet the pervasive algorithmic bias (≈83% high‑risk models, 82% performance gaps, sensitivity 52.6% vs 39.6%) undermines real‑world effectiveness—explaining why only 19% of deployers report high success.",
+    "model_answer": "Regulatory clearance via 510(k) with minimal evidence (<2% randomized trials) and weak post‑market surveillance (5% adverse‑event reporting) allows widespread deployment, yet algorithmic bias (83% high‑risk bias, 82% performance gaps across races) degrades real‑world performance, explaining why only 19% of deployers report high success.",
     "expected_answer": "Validation demographic gap → real-world performance drop",
-    "score": 1.0,
+    "score": 9.0,
     "rubric": {
       "factual": 3,
-      "citation": 2,
+      "citation": 3,
       "reasoning": 2,
       "completeness": 2,
-      "total": 9
+      "total": 10
     }
   },
   {
     "id": "Q10",
     "question": "Two frameworks for governing post-deployment AI in healthcare propose different monitoring mechanisms. One focuses on operationalised clinic-level audit steps; the other calls for adaptive regulatory oversight replacing static approval. What does the EU AI Act add that neither framework alone provides?",
-    "model_answer": "The EU AI Act adds new obligations for high‑risk AI systems—quality management, transparency, human oversight, etc.—that neither framework alone provides.",
+    "model_answer": "A risk‑based classification and mandatory compliance requirements for high‑risk AI (quality management, transparency, human oversight, etc.) that neither framework alone provides.",
     "expected_answer": "Binding enforcement",
     "score": 0.0,
     "rubric": {
