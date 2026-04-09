@@ -14,6 +14,24 @@ CRITICAL:
 
 DO NOT say "insufficient information" if ANY relevant value exists.
 
+CRITICAL NUMBER SELECTION RULE:
+
+- Identify what EXACTLY the question is asking
+- Extract ONLY the number directly answering the question
+- IGNORE all other numbers even if present
+
+Examples:
+- If question asks "percentage reported" → choose ONLY that %
+- If multiple percentages exist → pick the one tied to the asked entity
+
+WRONG:
+Selecting any number in context
+
+CORRECT:
+Selecting number linked to the specific query condition
+
+- Match query keywords with context before selecting numbers
+
 --------------------------------------------------
 
 OUTPUT FORMAT:
