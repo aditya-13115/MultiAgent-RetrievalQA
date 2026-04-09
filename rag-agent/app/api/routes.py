@@ -46,7 +46,7 @@ def query_api(req: QueryRequest):
                 "retrieved_docs": result.get("retrieved_docs"),
                 "reasoning": result.get("reasoner_output"),
                 "critic": result.get("critic_output"),
-            }
+            },
         }
 
     except Exception as e:
@@ -59,7 +59,7 @@ def query_api(req: QueryRequest):
                 "retrieved_docs": [],
                 "reasoning": str(e),
                 "critic": None,
-            }
+            },
         }
 
 

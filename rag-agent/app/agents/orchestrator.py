@@ -16,7 +16,7 @@ def clean_doc_id(doc_id: str) -> str:
 
     doc_id = doc_id.replace("\u202f", " ").replace("\xa0", " ")
 
-    match = re.search(r'(\d+)', doc_id)
+    match = re.search(r"(\d+)", doc_id)
     if match:
         num = int(match.group(1))
         return f"Art. {str(num).zfill(2)}"
@@ -34,8 +34,8 @@ def normalize_answer(ans: str) -> str:
     ans = ans.replace("\u202f", " ")
     ans = ans.replace("–", "-")
 
-    ans = re.sub(r'(\d)\s*%', r'\1%', ans)
-    ans = re.sub(r'\s+', ' ', ans)
+    ans = re.sub(r"(\d)\s*%", r"\1%", ans)
+    ans = re.sub(r"\s+", " ", ans)
 
     return ans.strip()
 
@@ -46,7 +46,7 @@ def normalize_answer(ans: str) -> str:
 def extract_used_docs(text: str):
     text = text.replace("\u202f", " ").replace("\xa0", " ")
 
-    matches = re.findall(r'Art\.\s*(\d{1,2})', text)
+    matches = re.findall(r"Art\.\s*(\d{1,2})", text)
 
     cleaned = []
     for m in matches:
@@ -115,10 +115,7 @@ class Orchestrator:
         reasoner_output = generate_answer(current_query, final_context)
 
         reasoner_output = re.sub(
-            r"<think>.*?</think>",
-            "",
-            reasoner_output,
-            flags=re.DOTALL
+            r"<think>.*?</think>", "", reasoner_output, flags=re.DOTALL
         ).strip()
 
         # -------------------------
@@ -133,11 +130,7 @@ class Orchestrator:
         # -------------------------
         # 7. CRITIC
         # -------------------------
-        critic_output = evaluate_answer(
-            current_query,
-            reasoner_output,
-            final_context
-        )
+        critic_output = evaluate_answer(current_query, reasoner_output, final_context)
 
         # -------------------------
         # 8. FINAL ANSWER
@@ -145,8 +138,7 @@ class Orchestrator:
         try:
             if "FINAL ANSWER:" in reasoner_output:
                 final_answer_only = (
-                    reasoner_output
-                    .split("FINAL ANSWER:")[-1]
+                    reasoner_output.split("FINAL ANSWER:")[-1]
                     .split("CITATIONS:")[0]
                     .strip()
                 )
@@ -157,7 +149,7 @@ class Orchestrator:
             final_answer_only = ""
 
         final_answer_only = normalize_answer(final_answer_only)
-        # SAFETY FIX 
+        # SAFETY FIX
         if not final_answer_only:
             final_answer_only = reasoner_output.strip()
 
@@ -173,5 +165,5 @@ class Orchestrator:
             "retrieved_docs": final_docs,
             "reasoner_output": reasoner_output,
             "critic_output": critic_output,
-            "answer": final_answer_only
+            "answer": final_answer_only,
         }

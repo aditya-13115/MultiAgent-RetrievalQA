@@ -2,6 +2,7 @@ import faiss
 import numpy as np
 import pickle
 
+
 def build_faiss_index(embeddings, chunks, save_path):
     dim = len(embeddings[0])
     index = faiss.IndexFlatL2(dim)

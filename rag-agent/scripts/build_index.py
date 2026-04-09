@@ -11,12 +11,13 @@ from app.ingestion.chunker import chunk_documents
 from app.ingestion.embedder import embed_texts
 from app.ingestion.indexer import build_faiss_index
 
+
 def main():
     # 1. Configuration [cite: 240, 248]
     corpus_pdf = "data/raw/healthcare_ai_corpus_v2.pdf"
     index_path = "data/index"
     batch_size = 32  # Adjust based on your GPU/CPU memory
-    
+
     if not os.path.exists(corpus_pdf):
         print(f" Error: {corpus_pdf} not found. Ensure the file is in data/raw/")
         return
@@ -45,9 +46,9 @@ def main():
         batch_texts = texts[i : i + batch_size]
         batch_embeddings = embed_texts(batch_texts)
         all_embeddings.extend(batch_embeddings)
-    
+
     # Convert list to numpy array for FAISS
-    all_embeddings = np.array(all_embeddings).astype('float32')
+    all_embeddings = np.array(all_embeddings).astype("float32")
     print(f"Embedding Done: {len(all_embeddings)} vectors generated.\n")
 
     # 5. Indexing [cite: 260]
@@ -55,6 +56,7 @@ def main():
     os.makedirs(index_path, exist_ok=True)
     build_faiss_index(all_embeddings, chunks, index_path)
     print(f"PIPELINE COMPLETE: Index saved to {index_path}\n")
+
 
 if __name__ == "__main__":
     main()

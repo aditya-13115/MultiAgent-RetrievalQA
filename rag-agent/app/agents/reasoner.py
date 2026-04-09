@@ -12,7 +12,7 @@ def clean_doc_id(doc_id: str) -> str:
 
     doc_id = doc_id.replace("\u202f", " ").replace("\xa0", " ")
 
-    match = re.search(r'(\d+)', doc_id)
+    match = re.search(r"(\d+)", doc_id)
     if match:
         num = int(match.group(1))
         return f"Art. {str(num).zfill(2)}"

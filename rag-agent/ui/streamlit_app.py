@@ -4,11 +4,7 @@ import requests
 API_URL = "http://127.0.0.1:8000/query"
 RESET_URL = "http://127.0.0.1:8000/reset"
 
-st.set_page_config(
-    page_title="Healthcare AI RAG",
-    layout="wide",
-    page_icon="🧠"
-)
+st.set_page_config(page_title="Healthcare AI RAG", layout="wide", page_icon="🧠")
 
 # -------------------------
 # SIDEBAR
@@ -71,10 +67,7 @@ if query:
             st.markdown(answer)
 
             # STORE RESPONSE
-            st.session_state.messages.append({
-                "role": "assistant",
-                "content": answer
-            })
+            st.session_state.messages.append({"role": "assistant", "content": answer})
 
             # -------------------------
             # COLLAPSIBLE TRACE

@@ -85,28 +85,33 @@ def main():
             reasoning = result.get("reasoner_output", "")
 
             #  UPDATED: better scoring using reasoning + answer
-            score = float(llm_judge_full(
-                reasoning + "\n\nFINAL ANSWER:\n" + answer,
-                q["answer"]
-            )["total"])
+            score = float(
+                llm_judge_full(reasoning + "\n\nFINAL ANSWER:\n" + answer, q["answer"])[
+                    "total"
+                ]
+            )
             rubric = llm_judge_full(
-                reasoning 
-                + "\n\nFINAL ANSWER:\n" + answer
-                + "\n\nUSED_DOCS: " + str(result.get("retrieved_docs", [])),
-                q["answer"] + "\nEXPECTED_DOCS: " + str(q.get("sources", []))
+                reasoning
+                + "\n\nFINAL ANSWER:\n"
+                + answer
+                + "\n\nUSED_DOCS: "
+                + str(result.get("retrieved_docs", [])),
+                q["answer"] + "\nEXPECTED_DOCS: " + str(q.get("sources", [])),
             )
 
             print_debug(q, result, answer, score, rubric)
 
-            results.append({
-            "id": q["id"],
-            "question": q["question"],
-            "model_answer": answer,
-            "expected_answer": q["answer"],
-            "used_docs": result.get("retrieved_docs", []),
-            "score": score,
-            "rubric": rubric
-        })
+            results.append(
+                {
+                    "id": q["id"],
+                    "question": q["question"],
+                    "model_answer": answer,
+                    "expected_answer": q["answer"],
+                    "used_docs": result.get("retrieved_docs", []),
+                    "score": score,
+                    "rubric": rubric,
+                }
+            )
 
         except Exception as e:
             print(f"ERROR in {q['id']}: {e}")

@@ -14,8 +14,8 @@ def normalize(text):
     text = text.replace("–", " ")
     text = text.replace("/", " ")
     text = text.replace("·", " ")
-    text = re.sub(r'[^a-z0-9% ]', '', text)
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = re.sub(r"[^a-z0-9% ]", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
     return text
 
 
@@ -206,5 +206,5 @@ Return STRICT JSON ONLY:
             "citation": 0,
             "reasoning": 0,
             "completeness": 0,
-            "total": 0
+            "total": 0,
         }

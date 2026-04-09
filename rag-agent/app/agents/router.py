@@ -2,6 +2,7 @@ from app.models.llm import call_llm
 from app.utils.helpers import load_prompt
 import re
 
+
 def route_query(query: str, history: str) -> str:
     prompt_template = load_prompt("router.txt")
     prompt = prompt_template.format(history=history, query=query)
@@ -9,7 +10,7 @@ def route_query(query: str, history: str) -> str:
     response = call_llm(prompt).strip().lower()
 
     # CLEAN response (remove punctuation, spaces)
-    response = re.sub(r'[^a-z_]', ' ', response)
+    response = re.sub(r"[^a-z_]", " ", response)
     tokens = response.split()
 
     # STRICT MATCHING

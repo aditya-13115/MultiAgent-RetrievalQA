@@ -1,106 +1,138 @@
 # MultiAgent-RetrievalQA
 
-An advanced Retrieval-Augmented Generation (RAG) system that integrates hybrid retrieval, multi-agent orchestration, and reranking to generate accurate, context-aware responses from a domain-specific knowledge base.
+An advanced Retrieval-Augmented Generation (RAG) system integrating hybrid retrieval, multi-agent orchestration, reranking, and evaluation-driven optimization to produce accurate, grounded, and context-aware answers from a domain-specific knowledge base.
 
 ---
 
 ## Overview
 
-This project implements a modular and scalable Retrieval-Augmented Generation (RAG) pipeline with **multi-agent orchestration and evaluation-driven improvements**.
+This project implements a modular, scalable, and evaluation-driven RAG pipeline with a strong focus on:
 
-It combines:
+- Grounded answer generation
+- Multi-hop reasoning across documents
+- Citation-aware responses
+- Robust evaluation and scoring
 
-- Dense embeddings (semantic search)
-- Sparse retrieval (BM25)
-- Hybrid retrieval strategies
+The system combines:
+
+- Dense retrieval (semantic search via embeddings)
+- Sparse retrieval (BM25 keyword search)
+- Hybrid retrieval with Reciprocal Rank Fusion (RRF)
 - Cross-encoder reranking
 - Multi-agent reasoning pipeline
-- Query rewriting and routing
-- Critique-based answer validation
-- LLM-based evaluation framework
+- Query rewriting and decomposition
+- Critique-based validation
+- LLM-based rubric evaluation
 
-The system is designed to be **robust, interpretable, and grounded**, minimizing hallucinations while maintaining answer completeness.
+The architecture is designed to minimize hallucinations while maintaining completeness and interpretability.
 
 ---
 
 ## Architecture
 
-The pipeline consists of the following components:
-
 ### 1. Ingestion Pipeline
-- Loads raw data
-- Chunks documents
+- Parses corpus (PDF + web sources)
+- Extracts metadata (article number, title, URL)
+- Performs chunking with overlap
 - Generates embeddings
 - Builds FAISS index
 
+---
+
 ### 2. Retrieval Layer
-- Dense retrieval using embeddings (FAISS)
-- Sparse retrieval using BM25
-- Hybrid retrieval combining both approaches
-- Multi-query retrieval via query decomposition
-- Deduplication across chunks and documents
+
+- Dense retrieval (FAISS + embeddings)
+- Sparse retrieval (BM25)
+- Hybrid retrieval using RRF
+- Multi-query retrieval via decomposition
+- Deduplication using chunk IDs
+- Configurable parameters:
+  - top_k
+  - alpha (semantic vs keyword balance)
+  - retrieval pool size
+
+---
 
 ### 3. Reranking
-- Cross-encoder reranking for improved precision
-- Combines retrieval score + semantic relevance
-- Filters top-k high-quality context chunks
+
+- Cross-encoder reranker (`ms-marco-MiniLM`)
+- Combines:
+  - semantic relevance
+  - keyword overlap
+- Improves precision of selected context
+
+---
 
 ### 4. Agentic Layer
 
-#### 🔹 Router
-- Classifies queries into:
+#### Router
+- Classifies queries:
   - factual
   - follow-up
   - out-of-scope
 
-#### 🔹 Query Rewriter
-- Rewrites follow-up queries using chat history
+#### Query Rewriter
+- Converts follow-up queries into standalone queries
 
-#### 🔹 Decomposer
-- Breaks complex queries into sub-queries
+#### Decomposer
+- Splits complex queries into sub-queries
 
-#### 🔹 Reasoner
-- Generates grounded answers using retrieved context
-- Enforces citation-based reasoning
+#### Reasoner
+- Generates grounded answers
+- Uses retrieved context
+- Produces citation-aware responses
 - Supports multi-document synthesis
 
-#### 🔹 Critic
-- Evaluates answer correctness, grounding, and completeness
-- Outputs final verdict (VALID / NEEDS IMPROVEMENT)
+#### Critic
+- Validates:
+  - factual correctness
+  - grounding
+  - completeness
 
-#### 🔹 Orchestrator
-- Manages full agent workflow:
+#### Orchestrator
+Coordinates the full pipeline:
+
 ```
 
-router → rewriter → decomposer → retriever → reranker → reasoner → critic
+router → rewriter → decomposer → retrieval → reranker → reasoner → critic
 
 ```
+
+---
 
 ### 5. Memory
-- Maintains conversational context across turns
+
+- Maintains conversational state
+- Enables follow-up query resolution
+
+---
 
 ### 6. API Layer
-- FastAPI-based interface for querying the system
+
+- FastAPI-based backend
+- Structured request/response handling
+- Supports integration with UI or external tools
+
+---
 
 ### 7. Evaluation Framework
-- Dataset-driven evaluation pipeline
-- LLM-based scoring system
-- Rubric-based evaluation
+
+- Dataset-driven evaluation
+- LLM-based scoring
+- Rubric-based assessment
 
 ---
 
 ## Multi-Agent Workflow
 
-The system follows a structured multi-agent pipeline:
-
-1. Router → classify query type  
-2. Rewriter → refine query (if follow-up)  
+1. Router → classify query  
+2. Rewriter → refine query  
 3. Decomposer → split into sub-queries  
-4. Retriever → hybrid retrieval (dense + sparse)  
-5. Reranker → improve relevance using cross-encoder  
-6. Reasoner → generate grounded answer with citations  
-7. Critic → evaluate and validate output  
-8. Memory → store interaction for future context  
+4. Retrieval → hybrid search (FAISS + BM25 + RRF)  
+5. Reranker → cross-encoder refinement  
+6. Reasoner → generate answer with citations  
+7. Critic → validate answer  
+8. Memory → store interaction  
 
 ---
 
@@ -109,188 +141,198 @@ The system follows a structured multi-agent pipeline:
 ```
 
 app/
-agents/        # Multi-agent components (router, rewriter, reasoner, critic, orchestrator)
+agents/        # Router, rewriter, reasoner, critic, orchestrator
 api/           # FastAPI routes and schemas
-ingestion/     # Data loading, chunking, embedding, indexing
-memory/        # Chat memory handling
-models/        # LLM interface
+ingestion/     # Parsing, chunking, embedding
+memory/        # Chat memory
+models/        # LLM interfaces
 prompts/       # Prompt templates
-retrieval/     # Hybrid retrieval and reranking
-utils/         # Helper functions and logging
+retrieval/     # Hybrid retrieval + reranking
+utils/         # Helpers
 
 data/
-raw/           # Input datasets
-processed/     # Processed chunks
-index/         # FAISS index and metadata
+raw/           # Input data
+processed/     # Chunked data
+index/         # FAISS index
 
 eval/
-Evaluation scripts and scoring
+eval_runner.py
+scorer.py
+questions.json
+results.json
 
 scripts/
-Utility scripts (index building, retrieval testing)
+build_index.py
 
 ui/
-Optional interface
+streamlit_app.py
 
-````
+```
 
 ---
 
 ## Features
 
-- Hybrid retrieval (dense + BM25)
+- Hybrid retrieval (semantic + keyword)
 - Cross-encoder reranking
-- Multi-agent orchestration
-- Query routing (factual / follow-up / out-of-scope)
-- Query rewriting with conversational memory
-- Multi-query decomposition
-- Grounded reasoning with citations
-- Critic-based answer validation
-- LLM-based evaluation pipeline
-- FAISS vector indexing
-- FastAPI backend
-
----
-
-## Design Goals
-
-- Reduce hallucination via strict grounding
-- Improve answer quality using multi-agent reasoning
-- Maintain modular and extensible architecture
-- Enable evaluation-driven development
-- Support real-world healthcare AI use cases
+- Multi-agent reasoning pipeline
+- Query decomposition for multi-hop reasoning
+- Citation-aware answer generation
+- LLM-based evaluation with rubric scoring
+- FAISS indexing with metadata support
+- FastAPI backend + Streamlit UI
 
 ---
 
 ## Evaluation Framework
 
-The system includes a robust evaluation pipeline:
+### Dataset
 
-- Dataset: `eval_set_ai_healthcare.json`
-- LLM-based scoring (0–10 scale)
-- Rubric-based evaluation:
-  - Factual accuracy (0–3)
-  - Citation quality (0–3)
-  - Reasoning quality (0–2)
-  - Completeness (0–2)
+Defined in:
+```
 
-### Metrics
+eval/questions.json
 
-- Average score: **~8.7–8.9 / 10**
-- Strong grounding and minimal hallucination
-- Consistent multi-document reasoning
+````
 
-### Features
+Each question includes:
+- query
+- expected answer
+- expected sources (articles)
 
-- Automatic scoring with judge LLM
-- Robust parsing (handles noisy outputs)
-- Supports per-query and aggregate evaluation
+---
+
+### Scoring System
+
+Rubric:
+
+- Factual Accuracy (0–3)
+- Citation Quality (0–3)
+- Reasoning Quality (0–2)
+- Completeness (0–2)
+
+Total: **0–10**
+
+---
+
+### Improvements Made
+
+- Introduced grounded citation evaluation using:
+  - USED_DOCS (from system)
+  - EXPECTED_DOCS (from dataset)
+- Fixed scoring inconsistencies between rubric and final score
+- Reduced overly harsh penalties for:
+  - partial correctness
+  - missing secondary citations
+- Ensured:
+  - at least one correct citation receives credit
+  - factual correctness is prioritized over citation count
+- Enabled float-based scoring
+
+---
+
+### Current Performance
+
+- Average score: **~7.0 – 8.5 / 10 (realistic, non-inflated)**
+- Strong performance on:
+  - factual queries
+  - multi-hop reasoning
+- Remaining challenges:
+  - missing ingestion for some documents
+  - number selection precision
 
 ---
 
 ## Key Improvements Implemented
 
-- Introduced hybrid retrieval (BM25 + embeddings)
-- Added cross-encoder reranking for better relevance
-- Implemented multi-agent pipeline (router → rewriter → reasoner → critic)
-- Added query decomposition for complex queries
-- Built LLM-based evaluation framework with rubric scoring
-- Improved prompt design for better reasoning and grounding
-- Reduced hallucinations while maintaining answer completeness
-- Achieved ~8.7+ average evaluation score
+- Hybrid retrieval with RRF tuning (alpha balancing)
+- Increased retrieval depth (dense + sparse k)
+- Cross-encoder reranking with keyword bias
+- Multi-query decomposition for complex questions
+- Robust citation extraction and filtering
+- Evaluation pipeline with:
+  - structured rubric
+  - JSON parsing
+  - consistency enforcement
+- Improved prompt engineering for:
+  - reasoning
+  - citation grounding
+  - fair scoring
 
 ---
 
 ## Example Capabilities
 
-- Handles multi-hop queries across documents
-- Supports conversational follow-up questions
-- Detects out-of-scope queries
-- Provides explainable reasoning with citations
-- Evaluates its own answers using a critic agent
+- Multi-document reasoning
+- Handling complex, multi-part queries
+- Conversational follow-ups
+- Citation-based answer generation
+- Self-evaluation via critic agent
 
 ---
 
 ## Installation (using uv)
 
-### 1. Clone the repository
+### Clone repository
 
 ```bash
 git clone https://github.com/aditya-13115/MultiAgent-RetrievalQA.git
 cd MultiAgent-RetrievalQA
 ````
 
-### 2. Create and activate virtual environment
+### Setup environment
 
 ```bash
 uv venv
+.venv\Scripts\activate
 ```
 
-Activate it:
-
-```bash
-.venv\Scripts\activate        # Windows
-source .venv/bin/activate     # Linux / Mac
-```
-
-### 3. Install dependencies
+### Install dependencies
 
 ```bash
 uv pip install -r requirements.txt
 ```
 
-### Optional (recommended with pyproject.toml)
-
-```bash
-uv sync
-```
-
 ---
 
-### 4. Set environment variables
-
-Create a `.env` file:
+### Environment variables
 
 ```
-OPENAI_API_KEY=your_key_here
-GROQ_API_KEY=your_key_here
+OPENAI_API_KEY=your_key
+GROQ_API_KEY=your_key
 ```
 
 ---
 
 ## Usage
 
-### 1. Build the index
+### Build index
 
 ```bash
 python scripts/build_index.py
 ```
 
-### 2. Run the API server
+### Run API
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-### 3. Query the system
+### Run UI
 
+```bash
+streamlit run app/ui/streamlit_app.py
 ```
-POST /query
-```
-
-Use Postman, curl, or UI.
 
 ---
 
 ## Evaluation
 
-Run evaluation:
-
 ```bash
 python eval/eval_runner.py
 ```
 
-Results will be saved in:
+Results:
 
 ```
 eval/results.json
@@ -300,20 +342,30 @@ eval/results.json
 
 ## Key Concepts
 
-* **Dense Retrieval** → semantic similarity via embeddings
-* **Sparse Retrieval** → keyword matching via BM25
-* **Hybrid Retrieval** → combines both for better recall + precision
-* **Reranking** → improves final document selection
-* **Agentic Design** → multiple agents collaborate for better outputs
-* **Grounded Generation** → answers strictly based on retrieved context
+* Dense Retrieval → semantic similarity
+* Sparse Retrieval → keyword matching
+* Hybrid Retrieval → combines both
+* Reranking → improves precision
+* Agentic Design → modular reasoning
+* Grounded Generation → context-based answers
 
 ---
 
 ## Future Improvements
 
-* Add streaming responses
-* Improve cross-encoder reranking
-* Add UI (Streamlit / React)
-* Support multiple domains
-* Advanced memory (long-term + summarization)
+* Improve ingestion robustness (PDF parsing)
+* Better multi-document citation coverage
+* Enhanced reasoning consistency
+* UI enhancements
+* Deployment (cloud-ready pipeline)
+* Caching
+
+```
+# What I improved
+
+- Added evaluation fixes you actually implemented
+- Added <USED_DOCS> vs <EXPECTED_DOCS> logic
+- Removed misleading inflated score claims
+- Cleaned architecture + flow explanation
+```
 ---
