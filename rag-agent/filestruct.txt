@@ -1,0 +1,118 @@
+Folder PATH listing for volume Acer
+Volume serial number is 22BA-0980
+C:.
+|   .env
+|   filestruct.txt
+|   
++---app
+|   |   config.py
+|   |   constants.py
+|   |   main.py
+|   |   __init__.py
+|   |   
+|   +---agents
+|   |   |   critic.py
+|   |   |   decomposer.py
+|   |   |   orchestrator.py
+|   |   |   query_rewriter.py
+|   |   |   reasoner.py
+|   |   |   router.py
+|   |   |   
+|   |           critic.cpython-313.pyc
+|   |           decomposer.cpython-313.pyc
+|   |           orchestrator.cpython-313.pyc
+|   |           query_rewriter.cpython-313.pyc
+|   |           reasoner.cpython-313.pyc
+|   |           router.cpython-313.pyc
+|   |           
+|   +---api
+|   |   |   routes.py
+|   |   |   schemas.py
+|   |   |   
+|   |           routes.cpython-313.pyc
+|   |           
+|   +---ingestion
+|   |   |   chunker.py
+|   |   |   embedder.py
+|   |   |   indexer.py
+|   |   |   loader.py
+|   |   |   
+|   |           chunker.cpython-313.pyc
+|   |           cleaner.cpython-313.pyc
+|   |           corpus_parser.cpython-313.pyc
+|   |           embedder.cpython-313.pyc
+|   |           indexer.cpython-313.pyc
+|   |           loader.cpython-313.pyc
+|   |           parser.cpython-313.pyc
+|   |           web_loader.cpython-313.pyc
+|   |           
+|   +---memory
+|   |   |   chat_memory.py
+|   |   |   
+|   |           chat_memory.cpython-313.pyc
+|   |           
+|   +---models
+|   |   |   llm.py
+|   |   |   
+|   |           llm.cpython-313.pyc
+|   |           
+|   +---prompts
+|   |       critic.txt
+|   |       decomposer.txt
+|   |       reasoner.txt
+|   |       rewriter.txt
+|   |       router.txt
+|   |       
+|   +---retrieval
+|   |   |   hybrid.py
+|   |   |   reranker.py
+|   |   |   retriever.py
+|   |   |   
+|   |           hybrid.cpython-313.pyc
+|   |           reranker.cpython-313.pyc
+|   |           retriever.cpython-313.pyc
+|   |           
+|   +---utils
+|   |   |   helpers.py
+|   |   |   logger.py
+|   |   |   
+|   |           helpers.cpython-313.pyc
+|   |           logger.cpython-313.pyc
+|   |           query_cleaner.cpython-313.pyc
+|   |           
+|           constants.cpython-313.pyc
+|           main.cpython-313.pyc
+|           
++---data
+|   +---index
+|   |       faiss.index
+|   |       metadata.pkl
+|   |       
+|   \---raw
+|           healthcare_ai_corpus_v2.pdf
+|           healthcare_ai_evalset_v2.pdf
+|           
++---eval
+|   |   eval_runner.py
+|   |   questions.json
+|   |   results.json
+|   |   scorer.py
+|   |   
+|           eval_runner.cpython-313.pyc
+|           scorer.cpython-313.pyc
+|           
++---logs
++---scripts
+|   |   build_index.py
+|   |   generate_questions_json.py
+|   |   test_retrieval.py
+|   |   __init__.py
+|   |   
+|           build_index.cpython-313.pyc
+|           build_web_index.cpython-313.pyc
+|           test_retrieval.cpython-313.pyc
+|           __init__.cpython-313.pyc
+|           
+\---ui
+        streamlit_app.py
+        

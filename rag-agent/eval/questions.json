@@ -1,0 +1,79 @@
+[
+  {
+    "id": "Q01",
+    "difficulty": "easy",
+    "sources": ["Art. 01", "Art. 04"],
+    "question": "What percentage of healthcare organisations had implemented domain-specific AI tools as of 2025, and how does this compare to the broader enterprise market?",
+    "answer": "22% vs 9%"
+  },
+  {
+    "id": "Q02",
+    "difficulty": "easy",
+    "sources": ["Art. 04"],
+    "question": "In a Fall 2024 survey of 43 US non-profit health systems, which AI use case was the only one with 100% adoption activity, and what success rate did respondents report for it?",
+    "answer": "Ambient Notes / 53%"
+  },
+  {
+    "id": "Q03",
+    "difficulty": "easy",
+    "sources": ["Art. 09"],
+    "question": "What share of clinical questions did the agentic system ChatRWD answer usefully, compared to standard large language models such as ChatGPT and Gemini?",
+    "answer": "58% (agentic) vs 2–10% (LLMs)"
+  },
+  {
+    "id": "Q04",
+    "difficulty": "easy",
+    "sources": ["Art. 10", "Art. 15"],
+    "question": "How many FDA-cleared AI/ML-enabled medical devices existed in the United States by mid-2024, and which clinical specialty accounts for the largest share of those approvals?",
+    "answer": "~950 total / Radiology 76%"
+  },
+  {
+    "id": "Q05",
+    "difficulty": "medium",
+    "sources": ["Art. 11", "Art. 12", "Art. 13"],
+    "question": "What Phase II milestone did Insilico Medicine reach with its AI-designed drug ISM001-055 (Rentosertib), what disease does it target, and what company merger in the same period reshaped the AI drug discovery competitive landscape?",
+    "answer": "Phase IIa · IPF · Recursion–Exscientia"
+  },
+  {
+    "id": "Q06",
+    "difficulty": "medium",
+    "sources": ["Art. 16", "Art. 17"],
+    "question": "A 2025 PLOS Digital Health paper identifies five critical ethical concerns in clinical AI integration. What are they, and which concern does the paper call out as most likely to worsen existing healthcare inequities?",
+    "answer": "Justice · Transparency · Consent · Accountability · Equity / Algorithmic bias"
+  },
+  {
+    "id": "Q07",
+    "difficulty": "medium",
+    "sources": ["Art. 19"],
+    "question": "The Hastings Center identifies a specific behavioural tendency of large language models that makes them unsuitable as standalone therapists. What is it, and why does it pose a particular risk in mental health contexts?",
+    "answer": "Sycophancy"
+  },
+  {
+    "id": "Q08",
+    "difficulty": "medium",
+    "sources": ["Art. 15", "Art. 17"],
+    "question": "A 2024 cross-sectional study of FDA-cleared AI devices found a critical gap in demographic reporting. What specific data was missing from the vast majority of device submissions, and what percentage of devices reported it?",
+    "answer": "Race/ethnicity / 3.6%"
+  },
+  {
+    "id": "Q09",
+    "difficulty": "hard",
+    "sources": ["Art. 04", "Art. 15"],
+    "question": "Imaging AI has high deployment rates across US health systems but only 19% of deployers report high success. Using what you know about FDA validation gaps and algorithmic bias literature, construct the most likely causal mechanism for this divergence.",
+    "answer": "Validation demographic gap → real-world performance drop"
+  },
+  {
+    "id": "Q10",
+    "difficulty": "hard",
+    "sources": ["Art. 16", "Art. 18"],
+    "question": "Two frameworks for governing post-deployment AI in healthcare propose different monitoring mechanisms. One focuses on operationalised clinic-level audit steps; the other calls for adaptive regulatory oversight replacing static approval. What does the EU AI Act add that neither framework alone provides?",
+    "answer": "Binding enforcement"
+  },
+  {
+    "id": "Q11",
+    "difficulty": "live",
+    "sources": ["Art. 21"],
+    "question": "On March 18 2026, mental health care providers at Kaiser Permanente went on strike. How many workers participated, what specific triage headcount change at one facility triggered the action, and what UK AI company was KP confirmed to be evaluating?",
+    "answer": "2,400 / 9→3 / Limbic"
+  }
+]

@@ -1,0 +1,14 @@
+Break the user query into clear sub-queries required to answer it.
+Rules:
+- Each sub-query should retrieve useful and distinct information
+- Keep them concise but meaningful
+- Avoid redundancy
+- For simple queries, return a single query
+- For complex queries, return 2-4 well-structured sub-queries
+
+IMPORTANT:
+- If question is simple → return ONLY ONE sub-query
+- Do NOT split unnecessarily
+
+Return ONLY a valid JSON list of strings. Do not include markdown or explanations.
+Query: {query}
