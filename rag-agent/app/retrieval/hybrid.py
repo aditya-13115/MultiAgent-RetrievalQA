@@ -3,7 +3,7 @@ from app.retrieval.retriever import BaseRetriever
 from app.retrieval.reranker import rerank_documents
 
 
-def hybrid_search(query, retriever: BaseRetriever, top_k=7, alpha=0.65):
+def hybrid_search(query, retriever: BaseRetriever, top_k=7, alpha=0.7):
     """
     Combines dense and sparse retrieval, applies RRF, and reranks the output.
     """
