@@ -9,7 +9,7 @@ def rewrite_query(query: str, history: str) -> str:
 
     raw_output = call_llm(prompt)
 
-    # ✅ REMOVE ALL <think> blocks completely
+    # REMOVE ALL <think> blocks completely
     clean_query = re.sub(r"<think>.*?</think>", "", raw_output, flags=re.DOTALL).strip()
 
     return clean_query

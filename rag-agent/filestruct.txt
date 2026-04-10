@@ -5,9 +5,7 @@ C:.
 |   filestruct.txt
 |   
 +---app
-|   |   config.py
 |   |   constants.py
-|   |   main.py
 |   |   __init__.py
 |   |   
 |   +---agents
@@ -109,7 +107,6 @@ C:.
 |           eval_runner.cpython-313.pyc
 |           scorer.cpython-313.pyc
 |           
-+---logs
 +---scripts
 |   |   build_index.py
 |   |   generate_questions_json.py

@@ -28,7 +28,7 @@ def load_questions(path):
 
 
 # -------------------------
-# DEBUG PRINT (FIXED)
+# DEBUG PRINT
 # -------------------------
 def print_debug(q, result, answer, score, rubric):
     print("\n" + "=" * 60)
@@ -84,7 +84,7 @@ def main():
             # reasoning
             reasoning = result.get("reasoner_output", "")
 
-            # SINGLE JUDGE CALL 
+            # SINGLE JUDGE CALL
             combined_input = (
                 reasoning
                 + "\n\nFINAL ANSWER:\n"

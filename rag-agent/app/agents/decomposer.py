@@ -6,8 +6,6 @@ from app.utils.helpers import load_prompt
 
 def decompose_query(query: str) -> list[str]:
     prompt_template = load_prompt("decomposer.txt")
-
-    # Format the prompt using your uploaded decomposer.txt
     prompt = prompt_template.format(query=query)
     response = call_llm(prompt).strip()
 

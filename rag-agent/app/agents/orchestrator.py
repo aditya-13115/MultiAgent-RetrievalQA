@@ -103,7 +103,7 @@ class Orchestrator:
                     )
 
                     all_docs.append(doc)
-            # ✅ FALLBACK (ADD THIS HERE)
+            # FALLBACK
         if not all_docs:
             all_docs = self.retriever.dense_search(current_query, top_k=8)
 

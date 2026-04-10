@@ -36,7 +36,7 @@ def extract_metadata_from_corpus_pdf(pdf_path):
                 url = url.replace("\n", "")
                 url = url.strip().rstrip(".,)")
 
-                # ✅ HARD FIX FOR ARTICLE 11
+                # HARD FIX FOR ARTICLE 11
                 if art_id == "11":
                     url = "https://www.sciencedirect.com/science/article/pii/S0031699725075118/pdfft?md5=581315c2472a6567c95c9b674e966e0c&pid=1-s2.0-S0031699725075118-main.pdf"
 
@@ -59,7 +59,7 @@ def extract_text_from_html(url):
     try:
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
-        # ✅ HANDLE PDF (for Article 11)
+        # HANDLE PDF (for Article 11)
         if url.endswith(".pdf") or "pdfft" in url:
             response = requests.get(url, headers=headers, timeout=15)
             response.raise_for_status()

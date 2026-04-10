@@ -20,7 +20,7 @@ def normalize(text):
 
 
 # =========================
-# SINGLE LLM JUDGE (FIXED)
+# SINGLE LLM JUDGE
 # =========================
 def llm_judge_full(pred, truth):
     prompt = f"""

@@ -140,32 +140,76 @@ router → rewriter → decomposer → retrieval → reranker → reasoner → c
 
 ```
 
-app/
-agents/        # Router, rewriter, reasoner, critic, orchestrator
-api/           # FastAPI routes and schemas
-ingestion/     # Parsing, chunking, embedding
-memory/        # Chat memory
-models/        # LLM interfaces
-prompts/       # Prompt templates
-retrieval/     # Hybrid retrieval + reranking
-utils/         # Helpers
-
-data/
-raw/           # Input data
-processed/     # Chunked data
-index/         # FAISS index
-
-eval/
-eval_runner.py
-scorer.py
-questions.json
-results.json
-
-scripts/
-build_index.py
-
-ui/
-streamlit_app.py
+.
+│   .env
+│   filestruct.txt
+│
+├── app/
+│   ├── constants.py
+│   ├── main.py
+│   │
+│   ├── agents/                # Multi-agent pipeline components
+│   │   ├── router.py
+│   │   ├── query_rewriter.py
+│   │   ├── decomposer.py
+│   │   ├── reasoner.py
+│   │   ├── critic.py
+│   │   ├── orchestrator.py
+│   │
+│   ├── api/                   # FastAPI layer
+│   │   ├── routes.py
+│   │   ├── schemas.py
+│   │
+│   ├── ingestion/             # Data ingestion pipeline
+│   │   ├── loader.py
+│   │   ├── chunker.py
+│   │   ├── embedder.py
+│   │   ├── indexer.py
+│   │
+│   ├── memory/                # Conversation memory
+│   │   ├── chat_memory.py
+│   │
+│   ├── models/                # LLM interfaces
+│   │   ├── llm.py
+│   │
+│   ├── prompts/               # Prompt templates
+│   │   ├── router.txt
+│   │   ├── rewriter.txt
+│   │   ├── decomposer.txt
+│   │   ├── reasoner.txt
+│   │   ├── critic.txt
+│   │
+│   ├── retrieval/             # Retrieval + reranking
+│   │   ├── retriever.py
+│   │   ├── hybrid.py
+│   │   ├── reranker.py
+│   │
+│   ├── utils/                 # Utility functions
+│       ├── helpers.py
+│       ├── logger.py
+│
+├── data/
+│   ├── raw/                   # Source documents
+│   │   ├── healthcare_ai_corpus_v2.pdf
+│   │   ├── healthcare_ai_evalset_v2.pdf
+│   │
+│   ├── index/                 # Vector index
+│       ├── faiss.index
+│       ├── metadata.pkl
+│
+├── eval/                      # Evaluation pipeline
+│   ├── eval_runner.py
+│   ├── scorer.py
+│   ├── questions.json
+│   ├── results.json
+│
+├── scripts/                   # Utility scripts
+│   ├── build_index.py
+│   ├── generate_questions_json.py
+│   ├── test_retrieval.py
+│
+├── ui/
+│   ├── streamlit_app.py       # Frontend (Streamlit)
 
 ```
 
@@ -233,7 +277,7 @@ Total: **0–10**
 
 ### Current Performance
 
-- Average score: **~7.0 – 8.5 / 10 (realistic, non-inflated)**
+- Average score: **~7.5 – 7.6 / 10**
 - Strong performance on:
   - factual queries
   - multi-hop reasoning

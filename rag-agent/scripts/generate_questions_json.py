@@ -117,16 +117,16 @@ def main():
     pdf_path = "data/raw/healthcare_ai_evalset_v2.pdf"
 
     if not os.path.exists(pdf_path):
-        print(f"❌ File not found: {pdf_path}")
+        print(f"\nFile not found: {pdf_path}")
         return
 
-    print("📄 Reading PDF...")
+    print("\nReading PDF...")
     text = load_pdf_text(pdf_path)
 
-    print("🤖 Extracting questions using LLM...")
+    print("\nExtracting questions using LLM...")
     response = extract_questions_with_llm(text)
 
-    print("💾 Saving JSON...")
+    print("\nSaving JSON...")
     save_json(response)
 
 
