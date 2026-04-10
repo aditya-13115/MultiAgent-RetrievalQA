@@ -12,6 +12,16 @@ from app.constants import INDEX_DIR
 from eval.scorer import final_score, llm_judge_full
 
 
+def extract_final_answer(text: str) -> str:
+    if not text:
+        return ""
+
+    if "FINAL ANSWER:" in text:
+        return text.split("FINAL ANSWER:")[-1].split("CITATIONS:")[0].strip()
+
+    return text.strip()
+
+
 # =========================
 # LOAD QUESTIONS
 # =========================
@@ -41,7 +51,6 @@ def print_debug(q, result, answer, score, rubric):
     print("\n ROUTE:", result.get("route"))
     print("\n SUB-QUERIES:", result.get("sub_queries"))
 
-    # ONLY USED DOCS (FIX)
     print("\n USED CITATIONS:")
     used_docs = result.get("retrieved_docs", [])
     print(used_docs if used_docs else "None")
@@ -79,19 +88,22 @@ def main():
 
         try:
             result = agent.process_query(q["question"])
-            answer = result.get("answer", "")
 
-            # reasoning
-            reasoning = result.get("reasoner_output", "")
+            raw_output = result.get("reasoner_output", "")
+            clean_answer = extract_final_answer(raw_output)
 
-            # SINGLE JUDGE CALL
-            combined_input = (
-                reasoning
-                + "\n\nFINAL ANSWER:\n"
-                + answer
-                + "\n\nCITATIONS USED:\n"
-                + ", ".join(result.get("retrieved_docs", []))
-            )
+            citations = result.get("retrieved_docs", [])
+
+            combined_input = f"""
+FINAL ANSWER:
+{clean_answer}
+
+CITATIONS:
+{", ".join(citations)}
+
+REASONING:
+{raw_output}
+"""
 
             truth_input = (
                 q["answer"]
@@ -107,15 +119,15 @@ def main():
             score = float(judge_output.get("total", 0))
             rubric = judge_output
 
-            print_debug(q, result, answer, score, rubric)
+            print_debug(q, result, clean_answer, score, rubric)
 
             results.append(
                 {
                     "id": q["id"],
                     "question": q["question"],
-                    "model_answer": answer,
+                    "model_answer": clean_answer,
                     "expected_answer": q["answer"],
-                    "used_docs": result.get("retrieved_docs", []),
+                    "used_docs": citations,
                     "score": score,
                     "rubric": rubric,
                 }
@@ -124,17 +136,11 @@ def main():
         except Exception as e:
             print(f"ERROR in {q['id']}: {e}")
 
-    # =========================
-    # SAVE RESULTS
-    # =========================
     os.makedirs("eval", exist_ok=True)
 
     with open("eval/results.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    # =========================
-    # FINAL SCORE
-    # =========================
     valid = [r["score"] for r in results if "score" in r]
     avg = sum(valid) / len(valid) if valid else 0
 
@@ -143,8 +149,5 @@ def main():
     print("=" * 60)
 
 
-# =========================
-# ENTRY
-# =========================
 if __name__ == "__main__":
     main()

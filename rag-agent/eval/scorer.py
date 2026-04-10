@@ -34,8 +34,17 @@ Evaluate the answer using this rubric:
 Ground truth:
 {truth}
 
-Model answer:
+MODEL OUTPUT:
 {pred}
+
+--------------------------------
+HOW TO EVALUATE:
+--------------------------------
+- Use ONLY "FINAL ANSWER" section for factual accuracy
+- Use ONLY "CITATIONS" section for citation quality
+- Use ONLY "REASONING" section for reasoning quality
+- Use "FINAL ANSWER" to judge completeness
+- DO NOT mix sections
 
 --------------------------------
 CORE PRINCIPLE:
