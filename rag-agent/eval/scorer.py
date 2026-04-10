@@ -20,7 +20,7 @@ def normalize(text):
 
 
 # =========================
-# SINGLE LLM JUDGE (MERGED PROMPT)
+# SINGLE LLM JUDGE (FIXED)
 # =========================
 def llm_judge_full(pred, truth):
     prompt = f"""
@@ -37,94 +37,70 @@ Ground truth:
 Model answer:
 {pred}
 
+--------------------------------
+CORE PRINCIPLE:
+--------------------------------
+- Judge based on MEANING, not wording
+- Be FAIR: not overly harsh, not overly lenient
+- Verify correctness strictly against ground truth
+
+--------------------------------
+SCORING SCALE:
+--------------------------------
+- Fully correct → 9–10
+- Mostly correct → 7–8.5
+- Partially correct → 5–6.5
+- Weak but relevant → 3–4.5
+- Incorrect → 0–2.5
+
+--------------------------------
+RULES:
+--------------------------------
+- Missing minor detail → reduce completeness ONLY
+- Wrong core fact → factual ≤ 1
+- If answer says "no info" but answer exists → factual = 0
+- Do NOT reward citation if answer is wrong
+
+--------------------------------
+DECIMAL SCORING:
+--------------------------------
+- You MAY use decimals (e.g., 1.5, 2.5)
+
+--------------------------------
+CITATION INTERPRETATION FIX:
+--------------------------------
+
+- If at least ONE citation is present AND answer is factually correct:
+  → assign citation score between 2–3
+
+- Do NOT require multiple citations for full marks
+
+- Treat USED_DOCS as valid supporting evidence
+
+- Do NOT give citation = 0 if a citation exists and answer is correct
+
+--------------------------------
+COMPLETENESS CALIBRATION:
+--------------------------------
+
+- If answer captures the MAIN fact but misses a secondary detail:
+  → completeness = 1.5–2
+
+- Do NOT heavily penalize missing minor numerical detail
+
+--------------------------------
+REASONING CALIBRATION:
+--------------------------------
+
+- For factual extraction questions:
+  → do NOT penalize reasoning if answer is correct
+  → reasoning ≥ 1.5 if answer is correct
+
+--------------------------------
 IMPORTANT:
-
-- Evaluate based on semantic correctness, NOT exact wording
-- Be LENIENT if the core meaning is correct
-- Do NOT assume correctness — verify against ground truth
-- Reward correct numbers/entities strongly
-
 --------------------------------
-CORE MATCH RULE (CRITICAL):
---------------------------------
-- If the model answer contains the core fact(s) from the ground truth,
-  treat it as correct EVEN if:
-  - wording differs
-  - formatting differs
-  - extra explanation is present
-
-- Missing secondary details should NOT drop score below 7
-  if core answer is correct
-
---------------------------------
-PRIORITY RULE:
---------------------------------
-- Identify PRIMARY facts (main answer)
-- Identify SECONDARY facts (extra detail)
-
-Scoring:
-
-- Primary correct → factual ≥ 2
-- Secondary missing → reduce completeness ONLY (not factual)
-
---------------------------------
-SCORING LOGIC:
---------------------------------
-- Fully correct → total = 9–10
-- Mostly correct → total = 7–9
-- Partially correct → total = 5–7
-- Weak but relevant → total = 3–5
-- Incorrect → 0–2
-
---------------------------------
-FACTUAL RULES:
---------------------------------
-- All key facts correct → 3
-- Minor mistake → 1–2
-- Major errors → 0
-
---------------------------------
-CITATION RULES:
---------------------------------
-- If at least ONE relevant citation is present → 2–3
-- Missing extra citations should NOT heavily reduce score
-- If answer is correct → prioritize correctness over citation count
-- Do NOT require exact match with expected docs
-
---------------------------------
-REASONING RULES:
---------------------------------
-- Clear, correct explanation → 2
-- Partial reasoning → 1
-- None → 0
-
---------------------------------
-COMPLETENESS RULES:
---------------------------------
-- All parts answered → 2
-- One part missing → 1
-- Major parts missing → 0
-
---------------------------------
-LENIENCY RULES:
---------------------------------
-- Concept correct but wording differs → allow credit
-- Entity correct but number wrong → factual ≥ 1
-- Mechanism correct but keyword missing → reasoning ≥ 1
-- Relevant answer → NEVER give all zeros unless completely wrong
-
---------------------------------
-GROUNDING RULE:
---------------------------------
-- If answer contradicts ground truth → factual = 0–1
-- If answer says "insufficient information" but answer exists → factual = 0
-
---------------------------------
-CONSISTENCY:
---------------------------------
-- Ensure (factual + citation + reasoning + completeness) = total
-- Total MUST be between 0 and 10
-- Do NOT output conflicting values
+- Ensure scores are internally consistent
+- BUT final consistency will be enforced programmatically
 
 Return STRICT JSON ONLY:
 {{
@@ -144,7 +120,24 @@ Return STRICT JSON ONLY:
             raise ValueError("No JSON found")
 
         res = json.loads(match.group())
-        res["total"] = float(res.get("total", 0))
+
+        # FORCE CONSISTENCY
+        factual = float(res.get("factual", 0))
+        citation = float(res.get("citation", 0))
+        reasoning = float(res.get("reasoning", 0))
+        completeness = float(res.get("completeness", 0))
+
+        total = factual + citation + reasoning + completeness
+
+        # Clamp values
+        total = max(0, min(10, total))
+
+        res["factual"] = factual
+        res["citation"] = citation
+        res["reasoning"] = reasoning
+        res["completeness"] = completeness
+        res["total"] = round(total, 2)
+
         return res
 
     except:
@@ -158,7 +151,7 @@ Return STRICT JSON ONLY:
 
 
 # =========================
-# FINAL SCORE (USES SAME OUTPUT)
+# FINAL SCORE
 # =========================
 def final_score(pred, truth):
     result = llm_judge_full(pred, truth)

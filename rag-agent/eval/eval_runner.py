@@ -84,18 +84,24 @@ def main():
             # reasoning
             reasoning = result.get("reasoner_output", "")
 
-            # ✅ SINGLE JUDGE CALL (FIX)
+            # SINGLE JUDGE CALL 
             combined_input = (
                 reasoning
                 + "\n\nFINAL ANSWER:\n"
                 + answer
-                + "\n\nUSED_DOCS: "
-                + str(result.get("retrieved_docs", []))
+                + "\n\nCITATIONS USED:\n"
+                + ", ".join(result.get("retrieved_docs", []))
+            )
+
+            truth_input = (
+                q["answer"]
+                + "\n\nEXPECTED SOURCES:\n"
+                + ", ".join(q.get("sources", []))
             )
 
             judge_output = llm_judge_full(
                 combined_input,
-                q["answer"] + "\nEXPECTED_DOCS: " + str(q.get("sources", [])),
+                truth_input,
             )
 
             score = float(judge_output.get("total", 0))
