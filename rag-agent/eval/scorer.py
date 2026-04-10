@@ -20,85 +20,7 @@ def normalize(text):
 
 
 # =========================
-# LLM SCORE (PRIMARY SCORER)
-# =========================
-def llm_score(pred, truth):
-    prompt = f"""
-Evaluate the answer using this rubric:
-
-1. Factual Accuracy (0–3)
-2. Citation Quality (0–3)
-3. Reasoning Quality (0–2)
-4. Completeness (0–2)
-
-Ground truth:
-{truth}
-
-Model answer:
-{pred}
-
-IMPORTANT:
-
-- Be LENIENT if the core meaning is correct
-- Focus on semantic correctness, not exact wording
-- Reward correct numbers/entities strongly
-
-SCORING LOGIC:
-
-- Fully correct → total = 9–10
-- Mostly correct → total = 7–9
-- Partially correct → total = 5–7
-- Relevant but weak → total = 3–5
-- Completely wrong → 0–2
-
-LENIENCY RULES:
-
-- Concept correct but wording differs → factual ≥ 2
-- Mechanism correct but keyword missing → reasoning ≥ 1
-- Entity correct but number wrong → factual ≥ 1
-- One part missing → completeness ≥ 1
-- Relevant answer → NEVER all zeros
-- If citation is correct and directly supports answer → give FULL 3
-- If answer is fully correct with correct citation → allow total = 10
-
-CITATION RULE:
-
-- If correct citation present → citation ≥ 1–2
-
-CONSISTENCY:
-
-- Ensure (factual + citation + reasoning + completeness) = total
-- Total MUST be between 0 and 10
-- Do NOT output conflicting values
-
-Return STRICT JSON ONLY:
-{{
-  "factual": <0-3>,
-  "citation": <0-3>,
-  "reasoning": <0-2>,
-  "completeness": <0-2>,
-  "total": <0-10>
-}}
-"""
-
-    response = call_judge_llm(prompt)
-
-    try:
-        num = re.findall(r"\d+\.?\d*", response)
-        return float(num[0]) if num else 0.0
-    except:
-        return 0.0
-
-
-# =========================
-# FINAL SCORE (NO HARDCODING)
-# =========================
-def final_score(pred, truth):
-    return llm_score(pred, truth)
-
-
-# =========================
-# RUBRIC SCORING
+# SINGLE LLM JUDGE (MERGED PROMPT)
 # =========================
 def llm_judge_full(pred, truth):
     prompt = f"""
@@ -117,64 +39,89 @@ Model answer:
 
 IMPORTANT:
 
-- Evaluate based on semantic correctness, not exact wording
-- Be fair but NOT overly lenient
+- Evaluate based on semantic correctness, NOT exact wording
+- Be LENIENT if the core meaning is correct
 - Do NOT assume correctness — verify against ground truth
+- Reward correct numbers/entities strongly
 
-SCORING LOGIC:
+--------------------------------
+CORE MATCH RULE (CRITICAL):
+--------------------------------
+- If the model answer contains the core fact(s) from the ground truth,
+  treat it as correct EVEN if:
+  - wording differs
+  - formatting differs
+  - extra explanation is present
 
-- Fully correct → total = 9–10
-- Mostly correct → total = 7–8
-- Partially correct → total = 5–6
-- Weak but relevant → total = 3–4
-- Incorrect → 0–2
+- Missing secondary details should NOT drop score below 7
+  if core answer is correct
 
-FACTUAL RULES:
-
-- All key facts correct → 3
-- Minor mistake (e.g., wrong number but correct entity) → 1–2
-- Major errors → 0
-- If answer is correct but citation incomplete → do NOT reduce factual score
-
-CITATION RULES:
-
-- Compare USED_DOCS with EXPECTED_DOCS (if provided)
+--------------------------------
+PRIORITY RULE:
+--------------------------------
+- Identify PRIMARY facts (main answer)
+- Identify SECONDARY facts (extra detail)
 
 Scoring:
 
-- 3 → correct citation AND answer is correct
-- 2 → at least one correct citation present
-- 1 → weak or partially relevant citation
-- 0 → no relevant citation
+- Primary correct → factual ≥ 2
+- Secondary missing → reduce completeness ONLY (not factual)
 
-IMPORTANT:
+--------------------------------
+SCORING LOGIC:
+--------------------------------
+- Fully correct → total = 9–10
+- Mostly correct → total = 7–9
+- Partially correct → total = 5–7
+- Weak but relevant → total = 3–5
+- Incorrect → 0–2
 
-- If answer is correct and at least ONE correct citation is present → give HIGH credit (2–3)
-- Do NOT heavily penalize missing additional citations if answer is correct
-- Prioritize correctness of answer over number of citations
-- Multiple citations are good but NOT mandatory for full marks
-- If answer is correct but citation incomplete → do NOT reduce factual score
+--------------------------------
+FACTUAL RULES:
+--------------------------------
+- All key facts correct → 3
+- Minor mistake → 1–2
+- Major errors → 0
 
+--------------------------------
+CITATION RULES:
+--------------------------------
+- If at least ONE relevant citation is present → 2–3
+- Missing extra citations should NOT heavily reduce score
+- If answer is correct → prioritize correctness over citation count
+- Do NOT require exact match with expected docs
+
+--------------------------------
 REASONING RULES:
-
+--------------------------------
 - Clear, correct explanation → 2
-- Some reasoning but incomplete → 1
-- No reasoning → 0
+- Partial reasoning → 1
+- None → 0
 
+--------------------------------
 COMPLETENESS RULES:
-
+--------------------------------
 - All parts answered → 2
 - One part missing → 1
 - Major parts missing → 0
 
+--------------------------------
 LENIENCY RULES:
+--------------------------------
+- Concept correct but wording differs → allow credit
+- Entity correct but number wrong → factual ≥ 1
+- Mechanism correct but keyword missing → reasoning ≥ 1
+- Relevant answer → NEVER give all zeros unless completely wrong
 
-- Concept correct but wording differs → allow partial credit
-- Entity correct but number wrong → do NOT give zero
-- Answer relevant → NEVER give all zeros unless completely wrong
+--------------------------------
+GROUNDING RULE:
+--------------------------------
+- If answer contradicts ground truth → factual = 0–1
+- If answer says "insufficient information" but answer exists → factual = 0
 
+--------------------------------
 CONSISTENCY:
-
+--------------------------------
 - Ensure (factual + citation + reasoning + completeness) = total
 - Total MUST be between 0 and 10
 - Do NOT output conflicting values
@@ -208,3 +155,11 @@ Return STRICT JSON ONLY:
             "completeness": 0,
             "total": 0,
         }
+
+
+# =========================
+# FINAL SCORE (USES SAME OUTPUT)
+# =========================
+def final_score(pred, truth):
+    result = llm_judge_full(pred, truth)
+    return float(result.get("total", 0))

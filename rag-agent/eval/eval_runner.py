@@ -81,23 +81,25 @@ def main():
             result = agent.process_query(q["question"])
             answer = result.get("answer", "")
 
-            #  ADD: pass reasoning also
+            # reasoning
             reasoning = result.get("reasoner_output", "")
 
-            #  UPDATED: better scoring using reasoning + answer
-            score = float(
-                llm_judge_full(reasoning + "\n\nFINAL ANSWER:\n" + answer, q["answer"])[
-                    "total"
-                ]
-            )
-            rubric = llm_judge_full(
+            # ✅ SINGLE JUDGE CALL (FIX)
+            combined_input = (
                 reasoning
                 + "\n\nFINAL ANSWER:\n"
                 + answer
                 + "\n\nUSED_DOCS: "
-                + str(result.get("retrieved_docs", [])),
+                + str(result.get("retrieved_docs", []))
+            )
+
+            judge_output = llm_judge_full(
+                combined_input,
                 q["answer"] + "\nEXPECTED_DOCS: " + str(q.get("sources", [])),
             )
+
+            score = float(judge_output.get("total", 0))
+            rubric = judge_output
 
             print_debug(q, result, answer, score, rubric)
 
