@@ -55,6 +55,23 @@ def extract_used_docs(text: str):
     return sorted(list(set(cleaned)))
 
 
+def format_citations(used_docs, all_docs):
+    mapping = {}
+
+    for doc in all_docs:
+        doc_id = doc["metadata"].get("doc_id", "")
+        title = doc["metadata"].get("title", "Unknown Title")
+        mapping[doc_id] = title
+
+    formatted = []
+    for d in used_docs:
+        clean = d.strip("[]")
+        title = mapping.get(clean, "Unknown Title")
+        formatted.append(f"[{clean} – {title}]")
+
+    return formatted
+
+
 class Orchestrator:
     def __init__(self, retriever, memory):
         self.retriever = retriever
@@ -125,7 +142,8 @@ class Orchestrator:
 
         #
         #  STRICT: ONLY USED DOCS
-        final_docs = used_docs if used_docs else []
+
+        final_docs = format_citations(used_docs, final_context) if used_docs else []
 
         # -------------------------
         # 7. CRITIC

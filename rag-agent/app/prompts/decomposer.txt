@@ -1,14 +1,47 @@
 Break the user query into clear sub-queries required to answer it.
+
 Rules:
-- Each sub-query should retrieve useful and distinct information
-- Keep them concise but meaningful
-- Avoid redundancy
-- For simple queries, return a single query
-- For complex queries, return 2-4 well-structured sub-queries
 
-IMPORTANT:
-- If question is simple → return ONLY ONE sub-query
-- Do NOT split unnecessarily
+* Each sub-query should retrieve useful and distinct information
+* Keep them concise but meaningful
+* Avoid redundancy
 
-Return ONLY a valid JSON list of strings. Do not include markdown or explanations.
+---
+
+## MULTI-HOP REQUIREMENT (CRITICAL):
+
+* If the query requires information from multiple articles:
+  → Create sub-queries that cover EACH required part
+
+* If the query involves comparison, reasoning, or inference:
+  → Ensure sub-queries explicitly target ALL components
+
+* If needed, create sub-queries that help BRIDGE information across articles
+
+Example:
+
+* If question needs Art. 04 + Art. 15:
+  → One sub-query for each
+  → (Optional) one sub-query that connects both
+
+---
+
+## SIMPLE QUERY RULE:
+
+* If question is simple → return ONLY ONE sub-query
+* Do NOT split unnecessarily
+
+---
+
+## COVERAGE RULE:
+
+* Ensure that answering ALL sub-queries together fully answers the original question
+
+---
+
+## OUTPUT:
+
+Return ONLY a valid JSON list of strings.
+Do NOT include markdown or explanations.
+
 Query: {query}

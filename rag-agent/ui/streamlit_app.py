@@ -89,8 +89,10 @@ if query:
 
                 st.markdown("### Retrieved Docs")
                 docs = trace.get("retrieved_docs", [])
+
                 if docs:
-                    st.write(docs)
+                    for d in docs:
+                        st.markdown(f"- {d}")
                 else:
                     st.info("No citations extracted")
 
